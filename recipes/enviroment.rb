@@ -37,3 +37,7 @@ web_app domain do
   server_aliases aliases
   docroot node['deploy-project']['path']
 end
+
+execute "Change permissions for #{node['deploy-project']['path']}" do
+  command "umount #{node['deploy-project']['path']} && mount -t vboxsf -o uid=`id -u #{node['apache']['user']}`,gid=`id -g #{node['apache']['group']}` #{node['deploy-project']['path']} #{node['deploy-project']['path']}"
+end
