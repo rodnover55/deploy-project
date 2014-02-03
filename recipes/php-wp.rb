@@ -11,7 +11,7 @@ mysql_database db_name do
   action :query
 end
 
-template "#{node['deploy-project']['path']}/wp_config.php" do
+template "#{node['deploy-project']['path']}/wp-config.php" do
   source 'wp-config.php.erb'
   owner node['apache']['user']
   group node['apache']['group']
