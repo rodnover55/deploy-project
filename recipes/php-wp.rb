@@ -10,3 +10,9 @@ mysql_database db_name do
   sql { ::File.open(node['deploy-project']['db']['install']).read }
   action :query
 end
+
+template "#{node['deploy-project']['source']}/wp_config.php" do
+  source 'wp-config.php.erb'
+  owner node['apache']['user']
+  group node['apache']['group']
+end
