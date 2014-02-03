@@ -6,12 +6,12 @@ mysql_database db_name do
       :username => node['deploy-project']['db']['user'],
       :password => node['deploy-project']['db']['password']
   )
-  not_if do ::File.exists?("#{node['deploy-project']['source']}/wp_config.php") end
+  not_if do ::File.exists?("#{node['deploy-project']['path']}/wp_config.php") end
   sql { ::File.open(node['deploy-project']['db']['install']).read }
   action :query
 end
 
-template "#{node['deploy-project']['source']}/wp_config.php" do
+template "#{node['deploy-project']['path']}/wp_config.php" do
   source 'wp-config.php.erb'
   owner node['apache']['user']
   group node['apache']['group']
