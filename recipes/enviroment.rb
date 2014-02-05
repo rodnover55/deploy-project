@@ -1,8 +1,16 @@
+needApacheConfigure = (node['deploy-project']['disabled'] || []).include?('apache-configure')
+needMysqlConfigure = (node['deploy-project']['disabled'] || []).include?('mysql-configure')
 include_recipe 'apt'
-include_recipe 'apache2'
-include_recipe 'apache2::mod_rewrite'
+
+if needApacheConfigure
+  include_recipe 'apache2'
+  include_recipe 'apache2::mod_rewrite'
+end
+if needMysqlConfigure
+  include_recipe 'database::mysql'
+end
+
 packages = %w[mysql-server php5 mysql-client php5-mcrypt php5-curl php5-gd php5-mysql screen git]
-include_recipe 'database::mysql'
 
 packages.each { |p|
   package p
@@ -21,10 +29,12 @@ end
 domain = node['deploy-project']['domain'] || "#{node['deploy-project']['project']}.local"
 aliases = node['deploy-project']['aliases'] || ["www.#{node['deploy-project']['project']}.local"]
 
-web_app domain do
-  server_name domain
-  server_aliases aliases
-  docroot node['deploy-project']['path']
+if needApacheConfigure
+  web_app domain do
+    server_name domain
+    server_aliases aliases
+    docroot node['deploy-project']['path']
+  end
 end
 
 #execute "Change permissions for #{node['deploy-project']['path']}" do
