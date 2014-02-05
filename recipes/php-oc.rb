@@ -20,7 +20,7 @@ template "#{node['deploy-project']['path']}/config.php" do
   group node['apache']['group']
 end
 
-template "#{node['deploy-project']['path']}/db-config.php" do
+template "#{node['deploy-project']['path']}/db_config.php" do
   source 'oc-db-config.php.erb'
   owner node['apache']['user']
   group node['apache']['group']
