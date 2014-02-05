@@ -18,18 +18,6 @@ mysql_database db_name do
   action :create
 end
 
-mysql_database db_name do
-  connection(
-      :host     => node['deploy-project']['db']['host'],
-      :username => node['deploy-project']['db']['user'],
-      :password => node['deploy-project']['db']['password']
-  )
-  only_if do !::File.exists?(node['deploy-project']['db']['config']) &&
-      ::File.exists?(node['deploy-project']['db']['install']) end
-  sql { ::File.open(node['deploy-project']['db']['install']).read }
-  action :query
-end
-
 domain = node['deploy-project']['domain'] || "#{node['deploy-project']['project']}.local"
 aliases = node['deploy-project']['aliases'] || ["www.#{node['deploy-project']['project']}.local"]
 
