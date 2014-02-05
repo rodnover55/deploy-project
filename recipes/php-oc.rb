@@ -37,3 +37,9 @@ template "#{node['deploy-project']['path']}/cli/config.php" do
   owner node['apache']['user']
   group node['apache']['group']
 end
+
+directory '/var/www/aquatica/system/cache/' do
+  owner node['apache']['user']
+  group node['apache']['group']
+  action :create
+end
