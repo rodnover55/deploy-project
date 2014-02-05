@@ -1,0 +1,26 @@
+<?php
+// HTTP
+define('HTTP_SERVER', sprintf('http://%s/', $_SERVER['HTTP_HOST']));
+define('ASSET_TIMESTAMP', true);
+
+// HTTPS
+define('HTTPS_SERVER', sprintf('http://%s/', $_SERVER['HTTP_HOST']));
+
+define ('ROOT', dirname(__FILE__));
+
+// DIR
+define('DIR_APPLICATION', ROOT . '/catalog/');
+define('DIR_SYSTEM', ROOT . '/system/');
+define('DIR_DATABASE', ROOT . '/system/database/');
+define('DIR_LANGUAGE', ROOT . '/catalog/language/');
+define('DIR_TEMPLATE', ROOT . '/catalog/view/theme/');
+define('DIR_CONFIG', ROOT . '/system/config/');
+define('DIR_IMAGE', ROOT . '/image/');
+define('DIR_CACHE', ROOT . '/system/cache/');
+define('DIR_DOWNLOAD', ROOT . '/download/');
+define('DIR_LOGS', ROOT . '/system/logs/');
+
+define('DIR_ELEMENTS', ROOT. '/elements/');
+
+// DB
+include_once ROOT . '/db_config.php';

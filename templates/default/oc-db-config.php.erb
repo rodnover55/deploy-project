@@ -1,0 +1,8 @@
+<?php
+
+define('DB_DRIVER', 'pdo');
+define('DB_HOSTNAME', '<%= node['deploy-project']['db']['host'] %>');
+define('DB_USERNAME', '<%= node['deploy-project']['db']['user'] %>');
+define('DB_DATABASE', '<%= node['deploy-project']['db']['database'] || node['deploy-project']['project'] %>');
+define('DB_PASSWORD', '<%= node['deploy-project']['db']['password'] %>');
+define('DB_PREFIX', 'oc_');

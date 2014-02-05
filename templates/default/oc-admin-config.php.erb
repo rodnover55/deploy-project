@@ -1,0 +1,26 @@
+<?php
+// HTTP
+define('HTTP_SERVER', sprintf('http://%s/admin/', $_SERVER['HTTP_HOST']));
+define('HTTP_CATALOG', sprintf('http://%s/', $_SERVER['HTTP_HOST']));
+
+// HTTPS
+define('HTTPS_SERVER', sprintf('http://%s/admin/', $_SERVER['HTTP_HOST']));
+define('HTTPS_CATALOG', sprintf('http://%s/', $_SERVER['HTTP_HOST']));
+
+define ('ROOT', dirname(__FILE__) . '/../');
+
+// DIR
+define('DIR_APPLICATION', ROOT . '/admin/');
+define('DIR_SYSTEM', ROOT . '/system/');
+define('DIR_DATABASE', ROOT . '/system/database/');
+define('DIR_LANGUAGE', ROOT . '/admin/language/');
+define('DIR_TEMPLATE', ROOT . '/admin/view/template/');
+define('DIR_CONFIG', ROOT . '/system/config/');
+define('DIR_IMAGE', ROOT . '/image/');
+define('DIR_CACHE', ROOT . '/system/cache/');
+define('DIR_DOWNLOAD', ROOT . '/download/');
+define('DIR_LOGS', ROOT . '/system/logs/');
+define('DIR_CATALOG', ROOT . '/catalog/');
+
+
+include_once ROOT . '/db_config.php';
