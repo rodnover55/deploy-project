@@ -31,7 +31,7 @@ mysql_database db_name do
 end
 
 domain = node['deploy-project']['domain'] || "#{node['deploy-project']['project']}.local"
-aliases = node['deploy-project']['aliases'] || "www.#{node['deploy-project']['project']}.local"
+aliases = node['deploy-project']['aliases'] || ["www.#{node['deploy-project']['project']}.local"]
 
 web_app domain do
   server_name domain
