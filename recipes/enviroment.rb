@@ -16,6 +16,8 @@ packages.each { |p|
   package p
 }
 
+include_recipe 'mysql::ruby'
+
 db_name = node['deploy-project']['db']['database'] || node['deploy-project']['project']
 mysql_database db_name do
   connection(
