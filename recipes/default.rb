@@ -21,7 +21,7 @@ file "#{key_dir}.ssh/id_rsa.pub" do
   mode 00700
 end
 
-template "{key_dir}wrap-ssh4git.sh" do
+template "#{key_dir}wrap-ssh4git.sh" do
   source "wrap-ssh4git.sh.erb"
   mode 00700
   owner node['apache']['user']
