@@ -29,8 +29,6 @@ template "{key_dir}wrap-ssh4git.sh" do
   variables({key: "#{key_dir}.ssh/id_rsa" })
 end
 
-file
-
 deploy "private_repo" do
   repository node['deploy-project']['repo']['url']
   branch node['deploy-project']['repo']['branch'] || 'master'
