@@ -37,6 +37,7 @@ deploy "private_repo" do
   deploy_to node['deploy-project']['path']
   action :deploy
   ssh_wrapper "#{key_dir}wrap-ssh4git.sh"
+  enable_submodules true
 end
 
 
