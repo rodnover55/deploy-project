@@ -29,6 +29,10 @@ template "#{key_dir}wrap-ssh4git.sh" do
   variables({key: "#{key_dir}.ssh/id_rsa" })
 end
 
+directory node['deploy-project']['path'] do
+  owner node['apache']['user']
+  group node['apache']['group']
+end
 
 git node['deploy-project']['path'] do
   destination node['deploy-project']['path']
