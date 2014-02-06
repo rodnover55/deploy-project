@@ -36,6 +36,7 @@ if needApacheConfigure
     server_name domain
     server_aliases aliases
     docroot node['deploy-project']['path']
+    allow_override 'All'
   end
 end
 
