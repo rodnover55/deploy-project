@@ -1,6 +1,6 @@
 <?php
 
-define('DB_DRIVER', 'pdo');
+define('DB_DRIVER', '<%= node['deploy-project']['db']['provider'] %>');
 define('DB_HOSTNAME', '<%= node['deploy-project']['db']['host'] %>');
 define('DB_USERNAME', '<%= node['deploy-project']['db']['user'] %>');
 define('DB_DATABASE', '<%= node['deploy-project']['db']['database'] || node['deploy-project']['project'] %>');
