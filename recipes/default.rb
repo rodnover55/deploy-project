@@ -29,15 +29,16 @@ template "#{key_dir}wrap-ssh4git.sh" do
   variables({key: "#{key_dir}.ssh/id_rsa" })
 end
 
-deploy "private_repo" do
-  repository node['deploy-project']['repo']['url']
-  branch node['deploy-project']['repo']['branch'] || 'master'
+
+git node['deploy-project']['path'] do
+  destination node['deploy-project']['path']
+  enable_submodules true
   user node['apache']['user']
   group node['apache']['group']
-  deploy_to node['deploy-project']['path']
-  action :deploy
+  repository node['deploy-project']['repo']['url']
+  revision node['deploy-project']['repo']['branch'] || 'master'
+  action :sync
   ssh_wrapper "#{key_dir}wrap-ssh4git.sh"
-  enable_submodules true
 end
 
 
