@@ -1,5 +1,5 @@
-needApacheConfigure = (node['deploy-project']['disabled'] || []).include?('apache-configure')
-needMysqlConfigure = (node['deploy-project']['disabled'] || []).include?('mysql-configure')
+needApacheConfigure = !(node['deploy-project']['disabled'] || []).include?('apache-configure')
+needMysqlConfigure = !(node['deploy-project']['disabled'] || []).include?('mysql-configure')
 include_recipe 'apt'
 
 if needApacheConfigure
