@@ -1,4 +1,9 @@
 include_recipe 'deploy-project::enviroment'
+
+execute "Change permissions for #{node['deploy-project']['path']}" do
+  command "umount #{node['deploy-project']['path']} && mount -t vboxsf -o uid=`id -u #{node['apache']['user']}`,gid=`id -g #{node['apache']['group']}` #{node['deploy-project']['path']} #{node['deploy-project']['path']}"
+end
+
 package 'php5-xdebug'
 
 ip = node[:network][:interfaces][:eth1][:addresses].detect{|k,v| v[:family] == "inet" }.first
