@@ -9,5 +9,6 @@ template "#{node['php']['modules_conf_dir']}xdebug.ini" do
   owner node['apache']['user']
   group node['apache']['group']
   variables({remote_host: remote_ip})
+  notifies :reload, "service[apache2]", :delayed
 end
 include_recipe 'deploy-project::configure'
