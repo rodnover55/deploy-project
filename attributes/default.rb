@@ -4,3 +4,4 @@ default['deploy-project']['db']['password'] = ''
 default['deploy-project']['db']['force-install'] = false
 default['deploy-project']['php-oc']['base'] = '/'
 default['deploy-project']['db']['provider'] = 'pdo'
+default['php']['modules_conf_dir'] = '/etc/php5/mods-available/'
