@@ -59,7 +59,7 @@ end
 
 unless node['deploy-project']['db']['migrate'].nil?
   execute "migrate" do
-    command node['deploy-project']['db']['migrate']
+    command "sleep 3; #{node['deploy-project']['db']['migrate']}"
     cwd node['deploy-project']['db']['migrate_cwd']
   end
 end
