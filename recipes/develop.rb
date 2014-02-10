@@ -1,7 +1,10 @@
 include_recipe 'deploy-project::enviroment'
 
-execute "Change permissions for #{node['deploy-project']['path']}" do
-  command "umount #{node['deploy-project']['path']} && mount -t vboxsf -o uid=`id -u #{node['apache']['user']}`,gid=`id -g #{node['apache']['group']}` #{node['deploy-project']['path']} #{node['deploy-project']['path']}"
+
+mount node['deploy-project']['path'] do
+  fstype 'vboxsf'
+  options "uid=`id -u #{node['apache']['user']}`,gid=`id -g #{node['apache']['group']}`"
+  device node['deploy-project']['path']
 end
 
 package 'php5-xdebug'
