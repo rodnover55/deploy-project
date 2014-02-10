@@ -19,6 +19,18 @@ packages.each { |p|
 include_recipe 'mysql::ruby'
 
 db_name = node['deploy-project']['db']['database'] || node['deploy-project']['project']
+
+if node['deploy-project']['db']['force-config']
+  mysql_database db_name do
+    connection(
+        :host     => node['deploy-project']['db']['host'],
+        :username => node['deploy-project']['db']['user'],
+        :password => node['deploy-project']['db']['password']
+    )
+    action :drop
+  end
+end
+
 mysql_database db_name do
   connection(
       :host     => node['deploy-project']['db']['host'],
