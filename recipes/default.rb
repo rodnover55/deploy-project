@@ -32,6 +32,12 @@ end
 directory node['deploy-project']['path'] do
   owner node['apache']['user']
   group node['apache']['group']
+  action :delete
+end
+
+directory node['deploy-project']['path'] do
+  owner node['apache']['user']
+  group node['apache']['group']
 end
 
 git node['deploy-project']['path'] do
@@ -43,6 +49,7 @@ git node['deploy-project']['path'] do
   revision node['deploy-project']['repo']['branch'] || 'master'
   action :export
   ssh_wrapper "#{key_dir}wrap-ssh4git.sh"
+  depth 1
 end
 
 
