@@ -34,15 +34,19 @@ directory node['deploy-project']['path'] do
   group node['apache']['group']
 end
 
-git node['deploy-project']['path'] do
+deploy node['deploy-project']['path'] do
   destination node['deploy-project']['path']
   enable_submodules true
   user node['apache']['user']
   group node['apache']['group']
   repository node['deploy-project']['repo']['url']
   revision node['deploy-project']['repo']['branch'] || 'master'
-  action :sync
+  action :deploy
   ssh_wrapper "#{key_dir}wrap-ssh4git.sh"
+  migrate !node['deploy-project']['db']['migrate'].nil?
+  unless node['deploy-project']['db']['migrate'].nil?
+    migration_command node['deploy-project']['db']['migrate']
+  end
 end
 
 
