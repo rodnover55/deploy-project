@@ -32,8 +32,8 @@ end
 
 unless node['deploy-project']['db']['migrate'].nil?
   execute "migrate" do
-    command File.basename(node['deploy-project']['db']['migrate'])
-    cwd File.dirname( node['deploy-project']['db']['migrate'])
+    command node['deploy-project']['db']['migrate']
+    cwd node['deploy-project']['db']['migrate_cwd']
   end
 end
 include_recipe 'deploy-project::configure'
