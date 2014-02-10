@@ -41,7 +41,7 @@ git node['deploy-project']['path'] do
   group node['apache']['group']
   repository node['deploy-project']['repo']['url']
   revision node['deploy-project']['repo']['branch'] || 'master'
-  action :sync
+  action :export
   ssh_wrapper "#{key_dir}wrap-ssh4git.sh"
 end
 
