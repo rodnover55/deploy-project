@@ -32,7 +32,7 @@ end
 
 unless node['deploy-project']['db']['migrate'].nil?
   execute "migrate" do
-    command node['deploy-project']['db']['migrate']
+    command File.basename(node['deploy-project']['db']['migrate'])
     cwd File.dirname( node['deploy-project']['db']['migrate'])
   end
 end
