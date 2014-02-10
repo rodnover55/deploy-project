@@ -33,6 +33,7 @@ directory node['deploy-project']['path'] do
   owner node['apache']['user']
   group node['apache']['group']
   action :delete
+  recursive true
 end
 
 directory node['deploy-project']['path'] do
