@@ -28,4 +28,12 @@ template "#{node['php']['modules_conf_dir']}xdebug.ini" do
   variables({remote_host: remote_ip})
   notifies :reload, "service[apache2]", :delayed
 end
+
+
+unless node['deploy-project']['db']['migrate'].nil?
+  execute "migrate" do
+    command node['deploy-project']['db']['migrate']
+    cwd File.dirname( node['deploy-project']['db']['migrate'])
+  end
+end
 include_recipe 'deploy-project::configure'
