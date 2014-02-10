@@ -64,6 +64,5 @@ unless node['deploy-project']['db']['migrate'].nil?
     command "sleep 3; #{node['deploy-project']['db']['migrate']}"
     cwd node['deploy-project']['db']['migrate_cwd']
     action :nothing
-    subscribes :run, ", :immediately
   end
 end
