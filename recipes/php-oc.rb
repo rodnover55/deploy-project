@@ -61,5 +61,6 @@ unless node['deploy-project']['db']['migrate'].nil?
   execute "migrate" do
     command node['deploy-project']['db']['migrate']
     cwd node['deploy-project']['db']['migrate_cwd']
+    not_if "sleep 3000", :timeout => 3
   end
 end
