@@ -1,0 +1,8 @@
+<?php
+return array(
+   'driver'    => 'pdo_mysql',
+   'host'      => '<%= node['deploy-project']['db']['host'] %>',
+   'user'      => '<%= node['deploy-project']['db']['user'] %>',
+   'dbname'    => '<%= node['deploy-project']['db']['database'] || node['deploy-project']['project'] %>'
+);
+

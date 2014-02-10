@@ -50,3 +50,16 @@ template "#{node['deploy-project']['path']}/.htaccess" do
   owner node['apache']['user']
   group node['apache']['group']
 end
+
+template "#{node['deploy-project']['path']}/deploy/migrations-db.php" do
+  source 'doc-migrations-db.php.erb'
+  owner node['apache']['user']
+  group node['apache']['group']
+end
+
+unless node['deploy-project']['db']['migrate'].nil?
+  execute "migrate" do
+    command node['deploy-project']['db']['migrate']
+    cwd node['deploy-project']['db']['migrate_cwd']
+  end
+end
