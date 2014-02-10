@@ -13,7 +13,6 @@ mysql_database db_name do
      !::File.exists?(node['deploy-project']['db']['install']) }
   sql { ::File.open(node['deploy-project']['db']['install']).read }
   action :query
-  notify :run, "template[#{node['deploy-project']['path']}/deploy/migrations-db.php]", :delayed
 end
 
 template "#{node['deploy-project']['path']}/config.php" do
@@ -56,13 +55,11 @@ template "#{node['deploy-project']['path']}/deploy/migrations-db.php" do
   source 'doc-migrations-db.php.erb'
   owner node['apache']['user']
   group node['apache']['group']
-  notify :run, "execute[migrate]", :immediately
 end
 
 unless node['deploy-project']['db']['migrate'].nil?
   execute "migrate" do
-    command "sleep 3; #{node['deploy-project']['db']['migrate']}"
+    command "sleep 5; #{node['deploy-project']['db']['migrate']}"
     cwd node['deploy-project']['db']['migrate_cwd']
-    action :nothing
   end
 end
