@@ -1,10 +1,12 @@
 include_recipe 'deploy-project::enviroment'
 
 
+web_user = Etc.getpwnam(Etc.getlogin)
 mount node['deploy-project']['path'] do
   fstype 'vboxsf'
-  options "uid=`id -u #{node['apache']['user']}`,gid=`id -g #{node['apache']['group']}`"
+  options "uid=#{web_user.uid},gid=#{web_user.gid}"
   device node['deploy-project']['path']
+  action :remount
 end
 
 package 'php5-xdebug'
