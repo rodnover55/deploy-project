@@ -29,11 +29,13 @@ template "#{key_dir}wrap-ssh4git.sh" do
   variables({key: "#{key_dir}.ssh/id_rsa" })
 end
 
-directory node['deploy-project']['path'] do
-  owner node['apache']['user']
-  group node['apache']['group']
-  action :delete
-  recursive true
+if node['deploy-project']['repo']['erase_path']
+  directory node['deploy-project']['path'] do
+    owner node['apache']['user']
+    group node['apache']['group']
+    action node['deploy-project']['repo']['method']
+    recursive true
+  end
 end
 
 directory node['deploy-project']['path'] do

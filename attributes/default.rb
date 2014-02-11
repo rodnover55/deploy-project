@@ -5,3 +5,5 @@ default['deploy-project']['db']['force-install'] = false
 default['deploy-project']['php-oc']['base'] = '/'
 default['deploy-project']['db']['provider'] = 'pdo'
 default['php']['modules_conf_dir'] = '/etc/php5/mods-available/'
+default['deploy-project']['repo']['erase_path'] = false
+default['deploy-project']['repo']['method'] = "sync"
