@@ -45,6 +45,12 @@ directory "#{node['deploy-project']['path']}/system/cache/" do
   action :create
 end
 
+directory "#{node['deploy-project']['path']}/image/cache/" do
+  owner node['apache']['user']
+  group node['apache']['group']
+  action :create
+end
+
 template "#{node['deploy-project']['path']}/.htaccess" do
   source 'oc-htaccess.erb'
   owner node['apache']['user']
