@@ -33,7 +33,7 @@ if node['deploy-project']['repo']['erase_path']
   directory node['deploy-project']['path'] do
     owner node['apache']['user']
     group node['apache']['group']
-    action node['deploy-project']['repo']['method']
+    action :delete
     recursive true
   end
 end
@@ -50,7 +50,7 @@ git node['deploy-project']['path'] do
   group node['apache']['group']
   repository node['deploy-project']['repo']['url']
   revision node['deploy-project']['repo']['branch'] || 'master'
-  action :export
+  action node['deploy-project']['repo']['sync']
   ssh_wrapper "#{key_dir}wrap-ssh4git.sh"
   depth 1
 end
