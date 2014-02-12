@@ -43,7 +43,7 @@ directory node['deploy-project']['path'] do
   group node['apache']['group']
 end
 
-if node['deploy-project']['repo']['sync'] == 'sync'
+if node['deploy-project']['repo']['method'] == 'sync'
   execute 'git config core.filemode false' do
     cwd node['deploy-project']['path']
   end
@@ -60,7 +60,7 @@ git node['deploy-project']['path'] do
   group node['apache']['group']
   repository node['deploy-project']['repo']['url']
   revision node['deploy-project']['repo']['branch'] || 'master'
-  action node['deploy-project']['repo']['sync']
+  action node['deploy-project']['repo']['method']
   ssh_wrapper "#{key_dir}wrap-ssh4git.sh"
   depth 1
 end
