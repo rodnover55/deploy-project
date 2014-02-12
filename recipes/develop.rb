@@ -1,3 +1,4 @@
+puts node.inspect
 include_recipe 'deploy-project::enviroment'
 
 
