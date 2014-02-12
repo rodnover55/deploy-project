@@ -43,6 +43,16 @@ directory node['deploy-project']['path'] do
   group node['apache']['group']
 end
 
+if node['deploy-project']['repo']['sync'] == 'sync'
+  execute 'git config core.filemode false' do
+    cwd node['deploy-project']['path']
+  end
+
+  execute 'git reset --hard' do
+    cwd node['deploy-project']['path']
+  end
+end
+
 git node['deploy-project']['path'] do
   destination node['deploy-project']['path']
   enable_submodules true
