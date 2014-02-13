@@ -9,3 +9,5 @@ default['deploy-project']['repo']['erase_path'] = false
 default['deploy-project']['repo']['method'] = "sync"
 default['deploy-project']['php-cake']['debug'] = 0
 default['deploy-project']['php-cake']['cache.disable'] = false
+
+default['deploy-project']['php']['timezone'] = nil
