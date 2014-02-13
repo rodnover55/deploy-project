@@ -20,5 +20,5 @@ end
 file "/etc/php5/conf.d/20-timezone.ini" do
   content "date.timezone = #{node['deploy-project']['php']['timezone']}"
   notifies :restart, "service[apache2]", :delayed
-  not_if(node['deploy-project']['php']['timezone'].nil?)
+  not_if { node['deploy-project']['php']['timezone'].nil? }
 end
