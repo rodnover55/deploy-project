@@ -15,3 +15,9 @@ template "#{node['deploy-project']['path']}/app/webroot/.htaccess" do
   owner node['apache']['user']
   group node['apache']['group']
 end
+
+
+file "/etc/php5/conf.d/20-timezone.ini" do
+  content "date.timezone = #{node['deploy-project']['php']['timezone']}"
+  notifies :restart, "service[apache2]", :delayed
+end
