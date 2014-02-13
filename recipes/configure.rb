@@ -3,4 +3,6 @@ case node['deploy-project']['type']
     include_recipe 'deploy-project::php-wp'
   when 'php-oc'
     include_recipe 'deploy-project::php-oc'
+  when 'php-cake'
+    include_recipe 'deploy-project::php-cake'
 end
