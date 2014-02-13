@@ -16,6 +16,13 @@ packages.each { |p|
   package p
 }
 
+if needApacheConfigure
+  link "/etc/php5/mods-available/mcrypt.ini" do
+    to "/etc/php5/conf.d/mcrypt.ini"
+    notifies :restart, "service[apache2]", :delayed
+  end
+end
+
 include_recipe 'mysql::ruby'
 
 db_name = node['deploy-project']['db']['database'] || node['deploy-project']['project']
