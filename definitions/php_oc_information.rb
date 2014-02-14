@@ -3,8 +3,9 @@ define :php_oc_information, :keyword => nil, :template => nil, :title => nil do
     raise 'Set required params'
   end
   params[:template] ||= params[:name]
-  execute "php oc template #{params[:title]}" do
+  execute "php cli/index.php configure/information '#{params[:keyword]}' '#{params[:template]}' '#{params[:title]}'" do
     command "php cli/index.php configure/information '#{params[:keyword]}' '#{params[:template]}' '#{params[:title]}'"
     cwd node['deploy-project']['path']
+    action :run
   end
 end
