@@ -71,8 +71,8 @@ unless node['deploy-project']['db']['migrate'].nil?
   end
 end
 
-unless node['php-oc']['informations'].nil?
-  node['php-oc']['informations'].each do |information|
+unless node['deploy-project']['php-oc']['informations'].nil?
+  node['deploy-project']['php-oc']['informations'].each do |information|
     php_oc_information information['template'] do
       keyword information['keyword']
       title information['title']
