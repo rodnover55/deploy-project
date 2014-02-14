@@ -49,6 +49,7 @@ if needMysqlConfigure
         :password => node['deploy-project']['db']['password']
     )
     password node['deploy-project']['db']['password']
+    host '%'
     action :grant
   end
 end
