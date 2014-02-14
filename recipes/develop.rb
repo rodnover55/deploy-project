@@ -33,6 +33,10 @@ if needApacheConfigure
 end
 
 if needMysqlConfigure
+  service 'mysql' do
+    action :nothing
+  end
+  
   template "/etc/mysql/conf.d/custom.cnf" do
     source 'mysql-custom.cnf.erb'
     notifies :reload, "service[mysql]", :delayed
