@@ -41,6 +41,15 @@ if needMysqlConfigure
     source 'mysql-custom.cnf.erb'
     notifies :restart, "service[mysql]", :delayed
   end
+
+  mysql_database_user 'root' do
+    connection(
+        :host     => node['deploy-project']['db']['host'],
+        :username => node['deploy-project']['db']['user'],
+        :password => node['deploy-project']['db']['password']
+    )
+    action     :grant
+  end
 end
 
 include_recipe 'deploy-project::configure'
