@@ -42,13 +42,14 @@ if needMysqlConfigure
     notifies :restart, "service[mysql]", :delayed
   end
 
-  mysql_database_user 'root' do
+  mysql_database_user "#{node['deploy-project']['db']['user']}" do
     connection(
         :host     => node['deploy-project']['db']['host'],
         :username => node['deploy-project']['db']['user'],
         :password => node['deploy-project']['db']['password']
     )
-    action     :grant
+    password node['deploy-project']['db']['password']
+    action :grant
   end
 end
 
