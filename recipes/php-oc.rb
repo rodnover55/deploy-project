@@ -70,3 +70,12 @@ unless node['deploy-project']['db']['migrate'].nil?
     cwd node['deploy-project']['db']['migrate_cwd']
   end
 end
+
+unless node['php-oc']['informations'].nil?
+  node['php-oc']['informations'].each do |information|
+    php_oc_information information['template'] do
+      keyword information['keyword']
+      title information['title']
+    end
+  end
+end
