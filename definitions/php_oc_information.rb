@@ -1,5 +1,5 @@
 define :php_oc_information, :keyword => nil, :template => nil, :title => nil do
-  if params[:template].nil? || params[:title].nil?
+  if params[:keyword].nil? || params[:title].nil?
     raise 'Set required params'
   end
   params[:template] ||= params[:name]
