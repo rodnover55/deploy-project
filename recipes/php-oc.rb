@@ -76,6 +76,8 @@ unless node['deploy-project']['php-oc']['informations'].nil?
     php_oc_information information['template'] do
       keyword information['keyword']
       title information['title']
+      sort_order information['sort_order'] || 0
+      bottom information['sort_order'] || 1
     end
   end
 end
