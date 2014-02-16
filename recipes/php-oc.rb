@@ -77,7 +77,7 @@ unless node['deploy-project']['php-oc']['informations'].nil?
       keyword information['keyword']
       title information['title']
       sort_order information['sort_order'] || 0
-      bottom information['sort_order'] || 1
+      bottom information['bottom'] || 1
     end
   end
 end
