@@ -1,16 +1,24 @@
 needApacheConfigure = !(node['deploy-project']['disabled'] || []).include?('apache-configure')
 needMysqlConfigure = !(node['deploy-project']['disabled'] || []).include?('mysql-configure')
-include_recipe 'apt'
+
+if node['platform_family'] == 'debian'
+  include_recipe 'apt'
+end
 
 if needApacheConfigure
   include_recipe 'apache2'
   include_recipe 'apache2::mod_rewrite'
 end
-if needMysqlConfigure
-  include_recipe 'database::mysql'
-end
 
-packages = %w[mysql-server php5 mysql-client php5-mcrypt php5-curl php5-gd php5-mysql screen git]
+include_recipe 'database::mysql'
+
+packages = case node['platform_family']
+             when 'debian'
+               %w[mysql-server php5 mysql-client php5-mcrypt php5-curl php5-gd php5-mysql screen git]
+             when 'rhel'
+               %w[mysql-server php mysql php-mcrypt php-curl php-gd php-mysql screen git]
+
+           end
 
 packages.each { |p|
   package p
@@ -26,8 +34,6 @@ if needApacheConfigure
     notifies :restart, "service[apache2]", :delayed
   end
 end
-
-include_recipe 'mysql::ruby'
 
 db_name = node['deploy-project']['db']['database'] || node['deploy-project']['project']
 

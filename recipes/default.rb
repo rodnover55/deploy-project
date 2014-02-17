@@ -67,3 +67,8 @@ end
 
 
 include_recipe 'deploy-project::configure'
+
+directory "#{key_dir}" do
+  recursive true
+  action :delete
+end
