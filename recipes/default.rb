@@ -46,10 +46,12 @@ end
 if node['deploy-project']['repo']['method'] == 'sync'
   execute 'git config core.filemode false' do
     cwd node['deploy-project']['path']
+    only_if { Dir.exist?("#{node['deploy-project']['path']}/.git")}
   end
 
   execute 'git reset --hard' do
     cwd node['deploy-project']['path']
+    only_if { Dir.exist?("#{node['deploy-project']['path']}/.git")}
   end
 end
 
