@@ -53,7 +53,14 @@ directory "#{node['deploy-project']['path']}/image/cache/" do
 end
 
 template "#{node['deploy-project']['path']}/.htaccess" do
-  source 'oc-htaccess.erb'
+  if node['deploy-project']['php-oc']['htaccess'].nil?
+    source 'oc-htaccess.erb'
+  else
+    source node['deploy-project']['php-oc']['htaccess']['template']
+    cookbook node['deploy-project']['php-oc']['htaccess']['cookbook']
+  end
+
+
   owner node['apache']['user']
   group node['apache']['group']
 end

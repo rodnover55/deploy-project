@@ -3,6 +3,7 @@ default['deploy-project']['db']['user'] = 'root'
 default['deploy-project']['db']['password'] = ''
 default['deploy-project']['db']['install_type'] = 'normal'
 default['deploy-project']['php-oc']['base'] = '/'
+default['deploy-project']['php-oc']['redirect'] = nil
 default['deploy-project']['db']['provider'] = 'pdo'
 default['php']['modules_conf_dir'] = '/etc/php5/mods-available/'
 default['deploy-project']['repo']['erase_path'] = false
