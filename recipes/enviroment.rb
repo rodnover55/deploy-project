@@ -25,12 +25,8 @@ packages.each { |p|
 }
 
 if needApacheConfigure
-  link "/etc/php5/mods-available/mcrypt.ini" do
-    to "/etc/php5/conf.d/mcrypt.ini"
-  end
-
   execute 'mcrypt' do
-    command 'php5enmod mcrypt'
+    command 'cp /usr/share/php5/mcrypt/mcrypt.ini /etc/php5/mods-available/; php5enmod mcrypt'
     notifies :restart, "service[apache2]", :delayed
   end
 end
