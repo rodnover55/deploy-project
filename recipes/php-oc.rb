@@ -99,3 +99,11 @@ unless node['deploy-project']['php-oc']['settings'].nil?
     end
   end
 end
+
+unless node['deploy-project']['php-oc']['modules'].nil?
+  node['deploy-project']['php-oc']['modules'].each do |name, action|
+    php_oc_module name do
+      action action
+    end
+  end
+end
