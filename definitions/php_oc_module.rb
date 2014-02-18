@@ -1,5 +1,5 @@
 define :php_oc_module, :module => nil, :action => nil, :config => nil do
-  if %w{install uninstall}.include?(params[:action])
+  unless %w{install uninstall}.include?(params[:action])
     raise 'Set required params'
   end
   params[:module] ||= params[:name]
