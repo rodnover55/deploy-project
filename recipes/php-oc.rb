@@ -88,3 +88,14 @@ unless node['deploy-project']['php-oc']['informations'].nil?
     end
   end
 end
+
+unless node['deploy-project']['php-oc']['settings'].nil?
+  node['deploy-project']['php-oc']['settings'].each do |group, settings|
+    settings.each do |key, value|
+      php_oc_setting key do
+        group group
+        value value
+      end
+    end
+  end
+end
