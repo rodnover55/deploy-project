@@ -25,9 +25,17 @@ packages.each { |p|
 }
 
 if needApacheConfigure
-  execute 'mcrypt' do
-    command 'cp /usr/share/php5/mcrypt/mcrypt.ini /etc/php5/mods-available/; php5enmod mcrypt'
-    notifies :restart, "service[apache2]", :delayed
+  if node['lsb']['codename'] == 'saucy'
+    execute 'mcrypt' do
+      command 'mv /etc/php5/conf.d/mcrypt.ini /etc/php5/mods-available/; php5enmod mcrypt'
+      only_if { ::File.exist?('/etc/php5/conf.d/mcrypt.ini')}
+      notifies :restart, "service[apache2]", :delayed
+    end
+  else
+    execute 'mcrypt' do
+      command 'php5enmod mcrypt'
+      notifies :restart, "service[apache2]", :delayed
+    end
   end
 end
 
