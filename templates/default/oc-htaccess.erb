@@ -23,7 +23,7 @@ RewriteBase <%= node['deploy-project']['php-oc']['base']; %>
 
 <% unless node['deploy-project']['php-oc']['redirect'].nil? %>
 RewriteCond %{HTTP_HOST} !^<%= Regexp.escape(node['deploy-project']['php-oc']['redirect']) %> [NC]
-RewriteRule ^(.*)$ http://<%= node['deploy-project']['php-oc']['redirect'] %> [R=301,L]
+RewriteRule ^(.*)$ http://<%= node['deploy-project']['php-oc']['redirect'] %>/$1 [R=301,L]
 <% end %>
 
 RewriteRule ^sitemap.xml$ index.php?route=feed/google_sitemap [L]
