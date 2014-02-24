@@ -12,9 +12,10 @@ define :php_oc_information, :keyword => nil, :template => nil, :title => nil, :s
       action :run
     end
   else
-    ruby_block "php cli/index.php configure/information_check '#{params[:keyword]}' '#{params[:template]}' '#{params[:title]}' '#{params[:sort_order]}' '#{params[:bottom]}' '#{params[:status]}'" do
-      not_if "cd '#{node['deploy-project']['path']}'; php cli/index.php configure/information '#{params[:keyword]}' '#{params[:template]}' '#{params[:title]}' '#{params[:sort_order]}' '#{params[:bottom]}' '#{params[:status]}'"
-      block { raise "Information not equal"}
+    execute "php cli/index.php configure/information_check '#{params[:keyword]}' '#{params[:template]}' '#{params[:title]}' '#{params[:sort_order]}' '#{params[:bottom]}' '#{params[:status]}'" do
+      command "php cli/index.php configure/information_check '#{params[:keyword]}' '#{params[:template]}' '#{params[:title]}' '#{params[:sort_order]}' '#{params[:bottom]}' '#{params[:status]}'"
+      cwd node['deploy-project']['path']
+      returns [0]
       action :run
     end
   end

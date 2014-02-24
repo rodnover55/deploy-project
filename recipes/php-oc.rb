@@ -86,6 +86,7 @@ unless node['deploy-project']['php-oc']['informations'].nil?
       sort_order information['sort_order'] || 0
       bottom information['bottom'] || 1
       status information['status'] || 1
+      force information['force'] || false
     end
   end
 end
