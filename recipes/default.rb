@@ -64,7 +64,7 @@ git node['deploy-project']['path'] do
   revision node['deploy-project']['repo']['branch'] || 'master'
   action node['deploy-project']['repo']['method']
   ssh_wrapper "#{key_dir}wrap-ssh4git.sh"
-  depth 1
+  #depth 1
 end
 
 
