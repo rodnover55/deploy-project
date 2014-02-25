@@ -31,7 +31,6 @@ if needApacheConfigure
       only_if { ::File.exist?('/etc/php5/conf.d/mcrypt.ini')}
       notifies :restart, "service[apache2]", :delayed
     end
-  else
     execute 'mcrypt' do
       command 'php5enmod mcrypt'
       notifies :restart, "service[apache2]", :delayed
