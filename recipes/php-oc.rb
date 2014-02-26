@@ -104,8 +104,18 @@ end
 
 unless node['deploy-project']['php-oc']['modules'].nil?
   node['deploy-project']['php-oc']['modules'].each do |name, action|
-    php_oc_module name do
+    php_oc_extention name do
       action action
+      type 'module'
+    end
+  end
+end
+
+unless node['deploy-project']['php-oc']['payments'].nil?
+  node['deploy-project']['php-oc']['payments'].each do |name, action|
+    php_oc_extention name do
+      action action
+      type 'payment'
     end
   end
 end
