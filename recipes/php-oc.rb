@@ -119,3 +119,28 @@ unless node['deploy-project']['php-oc']['payments'].nil?
     end
   end
 end
+
+unless node['deploy-project']['php-oc']['permissions'].nil?
+  node['deploy-project']['php-oc']['permissions'].each do |type, permissions|
+    permissions.each do |page, permission|
+      if permission.is_a?(Array)
+        permission.each do |name|
+          php_oc_permission name do
+            type type
+            page page
+          end
+        end
+      else
+        permission.each do |action, groups|
+          groups.each do |name|
+            php_oc_permission name do
+              type type
+              page page
+              action action
+            end
+          end
+        end
+      end
+    end
+  end
+end
