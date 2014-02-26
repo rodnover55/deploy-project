@@ -75,3 +75,5 @@ if needApacheConfigure
     allow_override 'All'
   end
 end
+
+include_recipe 'deploy-project::backup'
