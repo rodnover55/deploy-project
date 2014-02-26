@@ -19,6 +19,10 @@ packages = case node["platform"]
                %w[mysql-server php mysql php-mcrypt php-curl php-gd php-mysql screen git]
 
            end
+case node['platform_family']
+  when 'rhel'
+    packages << 'php-soap'
+end
 
 packages.each { |p|
   package p
