@@ -22,8 +22,8 @@ unless node['deploy-project']['backup'].nil?
   end
 
   cron "backup" do
-    minute Random.rand(59)
-    hour Random.rand(23)
+    minute node['deploy-project']['backup']['minute'] || Random.rand(59)
+    hour node['deploy-project']['backup']['hour'] || Random.rand(23)
     command "#{backup} #{log}"
   end
 end
