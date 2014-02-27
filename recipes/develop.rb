@@ -54,4 +54,6 @@ if needMysqlConfigure
   end
 end
 
+node['deploy-project']['dev'] = true
+
 include_recipe 'deploy-project::configure'

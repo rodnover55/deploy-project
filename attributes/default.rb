@@ -12,3 +12,4 @@ default['deploy-project']['php-cake']['debug'] = 0
 default['deploy-project']['php-cake']['cache.disable'] = false
 
 default['deploy-project']['php']['timezone'] = nil
+default['deploy-project']['dev'] = false

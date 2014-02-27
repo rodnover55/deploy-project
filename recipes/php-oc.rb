@@ -144,3 +144,11 @@ unless node['deploy-project']['php-oc']['permissions'].nil?
     end
   end
 end
+
+if node['deploy-project']['dev']
+  execute "php cli/index.php configure/password 'admin' '123123'" do
+    command "php cli/index.php configure/password 'admin' '123123'"
+    cwd node['deploy-project']['path']
+    action :run
+  end
+end
