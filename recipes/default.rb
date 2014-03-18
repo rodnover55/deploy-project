@@ -7,12 +7,12 @@ directory "#{key_dir}.ssh" do
   mode 00700
 end
 
-execute "cp #{node['deploy-project']['path']}/#{node['deploy-project']['repo']['private_key']}/* #{key_dir}.ssh/id_rsa" do
-  command "cp #{node['deploy-project']['path']}/#{node['deploy-project']['repo']['private_key']}/* #{key_dir}.ssh/id_rsa"
+execute "cp #{node['deploy-project']['path']}/#{node['deploy-project']['repo']['private_key']} #{key_dir}.ssh/id_rsa" do
+  command "cp #{node['deploy-project']['path']}/#{node['deploy-project']['repo']['private_key']} #{key_dir}.ssh/id_rsa"
 end
 
-execute "cp #{node['deploy-project']['path']}/#{node['deploy-project']['repo']['public_key']}/* #{key_dir}.ssh/id_rsa.pub" do
-  command "cp #{node['deploy-project']['path']}/#{node['deploy-project']['repo']['public_key']}/* #{key_dir}.ssh/id_rsa.pub"
+execute "cp #{node['deploy-project']['path']}/#{node['deploy-project']['repo']['public_key']} #{key_dir}.ssh/id_rsa.pub" do
+  command "cp #{node['deploy-project']['path']}/#{node['deploy-project']['repo']['public_key']} #{key_dir}.ssh/id_rsa.pub"
 end
 
 template "#{key_dir}wrap-ssh4git.sh" do
