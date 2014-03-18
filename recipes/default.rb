@@ -43,7 +43,7 @@ directory node['deploy-project']['path'] do
   group node['apache']['group']
 end
 
-if node['deploy-project']['repo']['method'] == 'force_sync'
+if node['deploy-project']['repo']['method'] == 'sync'
   execute 'git config core.filemode false' do
     cwd node['deploy-project']['path']
     only_if { Dir.exist?("#{node['deploy-project']['path']}/.git")}
