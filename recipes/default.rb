@@ -7,18 +7,12 @@ directory "#{key_dir}.ssh" do
   mode 00700
 end
 
-file "#{key_dir}.ssh/id_rsa" do
-  content node['deploy-project']['repo']['private_key']
-  owner node['apache']['user']
-  group node['apache']['group']
-  mode 00700
+execute "cp #{node['deploy-project']['path']}/#{node['deploy-project']['repo']['private_key']}/* #{key_dir}.ssh/id_rsa" do
+  command "cp #{node['deploy-project']['path']}/#{node['deploy-project']['repo']['private_key']}/* #{key_dir}.ssh/id_rsa"
 end
 
-file "#{key_dir}.ssh/id_rsa.pub" do
-  content node['deploy-project']['repo']['public_key']
-  owner node['apache']['user']
-  group node['apache']['group']
-  mode 00700
+execute "cp #{node['deploy-project']['path']}/#{node['deploy-project']['repo']['public_key']}/* #{key_dir}.ssh/id_rsa.pub" do
+  command "cp #{node['deploy-project']['path']}/#{node['deploy-project']['repo']['public_key']}/* #{key_dir}.ssh/id_rsa.pub"
 end
 
 template "#{key_dir}wrap-ssh4git.sh" do
