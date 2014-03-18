@@ -21,6 +21,15 @@ execute "cp #{node['deploy-project']['path']}/#{node['deploy-project']['repo']['
   umask 00700
 end
 
+execute "chown -R #{node['apache']['user']}:#{node['apache']['group']} '#{key_dir}.ssh/'" do
+  command "chown -R #{node['apache']['user']}:#{node['apache']['group']} '#{key_dir}.ssh/'"
+end
+
+execute "chmod -R 700 '#{key_dir}.ssh/'" do
+  command "chmod -R 700 '#{key_dir}.ssh/'"
+end
+
+
 template "#{key_dir}wrap-ssh4git.sh" do
   source "wrap-ssh4git.sh.erb"
   mode 00700
