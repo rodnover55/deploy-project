@@ -176,12 +176,6 @@ unless node['deploy-project']['php-oc']['tax_classes'].nil?
   end
 end
 
-execute "php cli/index.php install/aliases" do
-  command "php cli/index.php install/aliases"
-  cwd node['deploy-project']['path']
-  action :run
-end
-
 if node['deploy-project']['dev']
   execute "php cli/index.php configure/password 'admin' '123123'" do
     command "php cli/index.php configure/password 'admin' '123123'"
