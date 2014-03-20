@@ -166,6 +166,16 @@ unless node['deploy-project']['php-oc']['tax_rates'].nil?
   end
 end
 
+unless node['deploy-project']['php-oc']['tax_classes'].nil?
+  node['deploy-project']['php-oc']['tax_classes'].each do |tax_class|
+    php_oc_tax_class tax_class['slug'] do
+      title tax_class['title']
+      description tax_class['description']
+      tax_rule tax_class['tax_rule']
+    end
+  end
+end
+
 execute "php cli/index.php install/aliases" do
   command "php cli/index.php install/aliases"
   cwd node['deploy-project']['path']
