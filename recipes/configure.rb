@@ -6,3 +6,8 @@ case node['deploy-project']['type']
   when 'php-cake'
     include_recipe 'deploy-project::php-cake'
 end
+
+execute "end configure" do
+  command "echo 'End configure'"
+  action :run
+end
