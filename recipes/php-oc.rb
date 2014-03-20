@@ -145,6 +145,16 @@ unless node['deploy-project']['php-oc']['permissions'].nil?
   end
 end
 
+unless node['deploy-project']['php-oc']['geo_zones'].nil?
+  node['deploy-project']['php-oc']['geo_zones'].each do |geo_zone|
+    php_oc_geo_zone geo_zone['slug'] do
+      geo_zone_name geo_zone['name']
+      description geo_zone['description']
+      zones geo_zone['zones']
+    end
+  end
+end
+
 execute "php cli/index.php install/aliases" do
   command "php cli/index.php install/aliases"
   cwd node['deploy-project']['path']
