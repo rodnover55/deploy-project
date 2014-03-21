@@ -29,7 +29,14 @@ packages.each { |p|
   package p
 }
 
-service 'mysqld' do
+service_mysql = case node["platform"]
+  when "debian", "ubuntu"
+    'mysql'
+  when "redhat", "centos", "fedora"
+    'mysqld'
+
+end
+service service_mysql do
   action [:enable, :start]
 end
 
