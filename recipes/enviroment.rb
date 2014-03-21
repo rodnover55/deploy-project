@@ -25,13 +25,9 @@ packages = case node["platform"]
              when "debian", "ubuntu"
                %w[mysql-server php5 mysql-client php5-mcrypt php5-curl php5-gd php5-mysql screen git]
              when "redhat", "centos", "fedora"
-               %w[mysql-server php mysql php-mcrypt php-curl php-gd php-mysql screen git]
+               %w[mysql-server php mysql php-mcrypt php-curl php-gd php-mysql screen git php-domxml php-soap]
 
            end
-case node['platform_family']
-  when 'rhel'
-    packages << 'php-soap'
-end
 
 packages.each { |p|
   package p
