@@ -183,3 +183,7 @@ if node['deploy-project']['dev']
     action :run
   end
 end
+
+execute "rm -rf #{node['deploy-project']['path']}/system/cache/*" do
+  action :run
+end
