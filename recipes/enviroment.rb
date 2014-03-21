@@ -12,6 +12,11 @@ end
 
 include_recipe 'database::mysql'
 
+case node["platform"]
+  when "centos"
+    include_recipe 'yum-epel'
+end
+
 packages = case node["platform"]
              when "debian", "ubuntu"
                %w[mysql-server php5 mysql-client php5-mcrypt php5-curl php5-gd php5-mysql screen git]

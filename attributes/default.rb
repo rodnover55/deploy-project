@@ -13,3 +13,5 @@ default['deploy-project']['php-cake']['cache.disable'] = false
 
 default['deploy-project']['php']['timezone'] = nil
 default['deploy-project']['dev'] = false
+
+default['yum']['epel']['exclude'] = 'test*'
