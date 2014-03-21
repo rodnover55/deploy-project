@@ -176,6 +176,27 @@ unless node['deploy-project']['php-oc']['tax_classes'].nil?
   end
 end
 
+unless node['deploy-project']['php-oc']['languages'].nil?
+  node['deploy-project']['php-oc']['languages'].each do |language|
+    php_oc_language language['name'] do
+      code language['code']
+      locale language['locale']
+      image language['image']
+      directory language['directory']
+      filename language['filename']
+    end
+  end
+end
+
+unless node['deploy-project']['php-oc']['enabled_languages'].nil?
+  languages = node['deploy-project']['php-oc']['enabled_languages'].join(' ')
+  execute "php cli/index.php configure/enable_languages #{languages}" do
+    cwd node['deploy-project']['path']
+    action :run
+  end
+end
+
+
 if node['deploy-project']['dev']
   execute "php cli/index.php configure/password 'admin' '123123'" do
     command "php cli/index.php configure/password 'admin' '123123'"
