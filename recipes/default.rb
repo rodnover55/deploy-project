@@ -1,16 +1,17 @@
 include_recipe 'deploy-project::enviroment'
 
-template "/etc/mysql/conf.d/custom.cnf" do
-  source 'mysql-custom.cnf.erb'
-  notifies :restart, "service[mysqld]", :delayed
-end
-
 key_dir = '/tmp/deploy/'
 directory "#{key_dir}.ssh" do
   recursive true
   owner node['apache']['user']
   group node['apache']['group']
   mode 00700
+end
+
+template "/etc/my.cnf" do
+  source 'mysql-custom.cnf.erb'
+  only_if { node['platform'] == 'centos' }
+  notifies :restart, "service[mysqld]"
 end
 
 execute "cp #{node['deploy-project']['repo']['private_key']} #{key_dir}.ssh/id_rsa" do
