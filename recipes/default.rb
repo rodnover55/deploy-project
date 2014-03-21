@@ -8,15 +8,11 @@ directory "#{key_dir}.ssh" do
 end
 
 execute "cp #{node['deploy-project']['repo']['private_key']} #{key_dir}.ssh/id_rsa" do
-  user node['apache']['user']
-  group node['apache']['group']
   umask 00700
 end
 
 execute "cp #{node['deploy-project']['repo']['public_key']} #{key_dir}.ssh/id_rsa.pub" do
   command "cp #{node['deploy-project']['path']}/#{node['deploy-project']['repo']['public_key']} #{key_dir}.ssh/id_rsa.pub"
-  user node['apache']['user']
-  group node['apache']['group']
   umask 00700
 end
 
