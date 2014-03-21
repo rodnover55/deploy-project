@@ -8,10 +8,14 @@ directory "#{key_dir}.ssh" do
   mode 00700
 end
 
-template "/etc/my.cnf" do
-  source 'mysql-custom.cnf.erb'
-  only_if { node['platform'] == 'centos' }
-  notifies :restart, "service[mysqld]"
+needMysqlConfigure = !(node['deploy-project']['disabled'] || []).include?('mysql-configure')
+
+if needMysqlConfigure
+  template "/etc/my.cnf" do
+    source 'mysql-custom.cnf.erb'
+    only_if { node['platform'] == 'centos' }
+    notifies :restart, "service[mysqld]"
+  end
 end
 
 execute "cp #{node['deploy-project']['repo']['private_key']} #{key_dir}.ssh/id_rsa" do
