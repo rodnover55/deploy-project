@@ -12,7 +12,6 @@ execute "cp #{node['deploy-project']['repo']['private_key']} #{key_dir}.ssh/id_r
 end
 
 execute "cp #{node['deploy-project']['repo']['public_key']} #{key_dir}.ssh/id_rsa.pub" do
-  command "cp #{node['deploy-project']['path']}/#{node['deploy-project']['repo']['public_key']} #{key_dir}.ssh/id_rsa.pub"
   umask 00700
 end
 
