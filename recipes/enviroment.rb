@@ -25,12 +25,17 @@ packages = case node["platform"]
              when "debian", "ubuntu"
                %w[mysql-server php5 mysql-client php5-mcrypt php5-curl php5-gd php5-mysql screen git]
              when "redhat", "centos", "fedora"
-               %w[mysql-server php mysql php-mcrypt php-curl php-gd php-mysql screen git php-domxml php-soap]
+               %w[mysql-server php mysql php-mcrypt php-curl php-mbstring php-gd php-mysql screen git php-domxml php-soap]
 
            end
 
 packages.each { |p|
-  package p
+  package p do
+    case node["platform"]
+      when 'redhat', 'centos', 'fedora'
+        notifies :restart, 'service[httpd]'
+    end
+  end
 }
 
 if needApacheConfigure
