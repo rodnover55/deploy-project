@@ -12,10 +12,6 @@ end
 
 include_recipe 'database::mysql'
 
-service 'mysqld' do
-  action [:enable, :start]
-end
-
 case node["platform"]
   when "centos"
     include_recipe 'yum-epel'
@@ -30,14 +26,19 @@ packages = case node["platform"]
            end
 
 packages.each { |p|
-  package p do
-    case node["platform"]
-      when 'redhat', 'centos', 'fedora'
-        notifies :restart, 'service[httpd]'
-    end
-  end
+  package p
 }
 
+service 'mysqld' do
+  action [:enable, :start]
+end
+
+case node["platform"]
+  when "centos"
+    service 'httpd' do
+      action [:enable, :restart, :start]
+    end
+end
 if needApacheConfigure
   if node['lsb']['codename'] == 'saucy'
     execute 'mcrypt' do
