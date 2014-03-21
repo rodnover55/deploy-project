@@ -12,6 +12,10 @@ end
 
 include_recipe 'database::mysql'
 
+service 'mysqld' do
+  action [:enable, :start]
+end
+
 case node["platform"]
   when "centos"
     include_recipe 'yum-epel'
