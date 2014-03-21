@@ -1,4 +1,10 @@
 include_recipe 'deploy-project::enviroment'
+
+template "/etc/mysql/conf.d/custom.cnf" do
+  source 'mysql-custom.cnf.erb'
+  notifies :restart, "service[mysqld]", :delayed
+end
+
 key_dir = '/tmp/deploy/'
 directory "#{key_dir}.ssh" do
   recursive true

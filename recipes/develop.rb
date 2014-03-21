@@ -38,7 +38,7 @@ if needMysqlConfigure
   end
 
   template "/etc/mysql/conf.d/custom.cnf" do
-    source 'mysql-custom.cnf.erb'
+    source 'mysql-custom-dev.cnf.erb'
     notifies :restart, "service[mysql]", :delayed
   end
 
