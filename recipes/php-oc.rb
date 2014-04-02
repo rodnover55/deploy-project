@@ -196,6 +196,18 @@ unless node['deploy-project']['php-oc']['enabled_languages'].nil?
   end
 end
 
+unless node['deploy-project']['php-oc']['customers_groups'].nil?
+  node['deploy-project']['php-oc']['customers_groups'].each do |customer_group|
+    php_oc_customer_group customer_group['slug'] do
+      approval customer_group['approval']
+      sort_order customer_group['sort_order']
+      discount customer_group['discount']
+      discount_minimum customer_group['discount_minimum']
+      description customer_group['description']
+    end
+  end
+end
+
 
 if node['deploy-project']['dev']
   execute "php cli/index.php configure/password 'admin' '123123'" do
