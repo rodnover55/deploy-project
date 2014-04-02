@@ -204,6 +204,10 @@ unless node['deploy-project']['php-oc']['customers_groups'].nil?
       discount customer_group['discount']
       discount_minimum customer_group['discount_minimum']
       description customer_group['description']
+
+      unless customer_group['customer_group_id'].nil?
+        customer_group_id customer_group['customer_group_id']
+      end
     end
   end
 end
