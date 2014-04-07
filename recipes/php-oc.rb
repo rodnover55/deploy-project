@@ -11,7 +11,7 @@ mysql_database db_name do
         ::File.exists?("#{node['deploy-project']['path']}/cli/config.php") &&
         (node['deploy-project']['db']['install_type'] != 'force')) ||
      !::File.exists?(node['deploy-project']['db']['install']) ||
-      node['deploy-project']['db']['install_type'] == 'none'}
+      (node['deploy-project']['db']['install_type'] == 'none') }
   sql { ::File.open(node['deploy-project']['db']['install']).read }
   action :query
 end
