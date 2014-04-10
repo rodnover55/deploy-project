@@ -212,6 +212,19 @@ unless node['deploy-project']['php-oc']['customers_groups'].nil?
   end
 end
 
+unless node['deploy-project']['php-oc']['length_classes'].nil?
+  node['deploy-project']['php-oc']['length_classes'].each do |length|
+    php_oc_length length['slug'] do
+      value length['value']
+      description length['description']
+
+      unless length['length_class_id'].nil?
+        length_class_id length['length_class_id']
+      end
+    end
+  end
+end
+
 
 if node['deploy-project']['dev']
   execute "php cli/index.php configure/password 'admin' '123123'" do
