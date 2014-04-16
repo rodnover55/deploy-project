@@ -84,6 +84,9 @@ end
 
 include_recipe 'deploy-project::configure'
 
+execute "chown -R #{node['apache']['user']}:#{node['apache']['group']} '#{ node['deploy-project']['path']}'" do
+end
+
 directory "#{key_dir}" do
   recursive true
   action :delete
