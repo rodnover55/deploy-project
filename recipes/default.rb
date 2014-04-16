@@ -14,7 +14,7 @@ if needMysqlConfigure
   template "/etc/my.cnf" do
     source 'mysql-custom.cnf.erb'
     only_if { node['platform'] == 'centos' }
-    notifies :restart, "service[mysqld]"
+    notifies :restart, (node['platform'] == 'centos') ? ("service[mysqld]") : ("service[mysql]")
   end
 end
 
