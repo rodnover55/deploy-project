@@ -226,6 +226,17 @@ unless node['deploy-project']['php-oc']['length_classes'].nil?
 end
 
 
+unless node['deploy-project']['php-oc']['banners'].nil?
+  node['deploy-project']['php-oc']['banners'].each do |banner|
+    php_oc_banner banner['name'] do
+      status banner['status'] || 1
+      force banner['force'] || false
+      images banner['banner_image']
+    end
+  end
+end
+
+
 if node['deploy-project']['dev']
   execute "php cli/index.php configure/password 'admin' '123123'" do
     command "php cli/index.php configure/password 'admin' '123123'"
