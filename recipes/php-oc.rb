@@ -238,6 +238,27 @@ unless node['deploy-project']['php-oc']['categories'].nil?
   end
 end
 
+unless node['deploy-project']['php-oc']['currencies'].nil?
+  node['deploy-project']['php-oc']['currencies'].each do |currency|
+    php_oc_currency currency['code'] do
+      title currency['title']
+      symbol_left currency['symbol_left']
+      symbol_right currency['symbol_right']
+      decimal_place currency['decimal_place']
+      value currency['value']
+      status currency['status']
+    end
+  end
+end
+
+unless node['deploy-project']['php-oc']['enabled_currencies'].nil?
+  currencies = node['deploy-project']['php-oc']['enabled_currencies'].join(' ')
+  execute "php cli/index.php currency/enable #{currencies}" do
+    cwd node['deploy-project']['path']
+    action :run
+  end
+end
+
 
 if node['deploy-project']['dev']
   execute "php cli/index.php configure/password 'admin' '123123'" do
