@@ -21,7 +21,11 @@ unless node['deploy-project']['backup'].nil?
     })
   end
 
-  cron "backup" do
+  cron 'backup' do
+    action :delete
+  end
+
+  cron "#{node['deploy-project']['project']} backup" do
     minute node['deploy-project']['backup']['minute'] || Random.rand(59)
     hour node['deploy-project']['backup']['hour'] || Random.rand(23)
     command "#{backup} #{log}"
