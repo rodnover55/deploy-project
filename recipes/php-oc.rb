@@ -102,7 +102,7 @@ unless node['deploy-project']['php-oc']['settings'].nil?
   end
 end
 
-%w(modules payments feeds).each do |extention|
+%w(modules payments feeds totals).each do |extention|
   unless node['deploy-project']['php-oc'][extention].nil?
     node['deploy-project']['php-oc'][extention].each do |name, action|
       php_oc_extention name do
