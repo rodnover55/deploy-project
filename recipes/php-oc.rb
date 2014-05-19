@@ -87,6 +87,9 @@ unless node['deploy-project']['php-oc']['informations'].nil?
       bottom information['bottom'] || 1
       status information['status'] || 1
       force information['force'] || false
+      unless information['id'].nil?
+        id information['id']
+      end
     end
   end
 end
