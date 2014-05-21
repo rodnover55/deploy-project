@@ -1,6 +1,13 @@
 <?php
 
 define ('ROOT', dirname(__FILE__) . '/../');
+<% host = (node['deploy-project']['php-oc']['redirect'].nil?) ? (node['deploy-project']['domain']) : (node['deploy-project']['php-oc']['redirect']) %>
+define('HTTP_SERVER', 'http://<%= host %>/admin/');
+define('HTTP_CATALOG', 'http://<%= host %>/');
+
+// HTTPS
+define('HTTPS_SERVER', 'http://<%= host %>/admin/');
+define('HTTPS_CATALOG', 'http://<%= host %>/');
 
 // DIR
 define('DIR_APPLICATION', ROOT . '/admin/');
