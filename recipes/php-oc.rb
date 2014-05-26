@@ -65,18 +65,6 @@ template "#{node['deploy-project']['path']}/.htaccess" do
   group node['apache']['group']
 end
 
-template "#{node['deploy-project']['path']}/deploy/migrations-db.php" do
-  source 'doc-migrations-db.php.erb'
-  owner node['apache']['user']
-  group node['apache']['group']
-end
-
-unless node['deploy-project']['db']['migrate'].nil?
-  execute "migrate" do
-    command "sleep 5; #{node['deploy-project']['db']['migrate']}"
-    cwd node['deploy-project']['db']['migrate_cwd']
-  end
-end
 
 unless node['deploy-project']['php-oc']['informations'].nil?
   node['deploy-project']['php-oc']['informations'].each do |information|
@@ -189,6 +177,20 @@ unless node['deploy-project']['php-oc']['enabled_languages'].nil?
   execute "php cli/index.php configure/enable_languages #{languages}" do
     cwd node['deploy-project']['path']
     action :run
+  end
+end
+
+
+template "#{node['deploy-project']['path']}/deploy/migrations-db.php" do
+  source 'doc-migrations-db.php.erb'
+  owner node['apache']['user']
+  group node['apache']['group']
+end
+
+unless node['deploy-project']['db']['migrate'].nil?
+  execute "migrate" do
+    command "sleep 5; #{node['deploy-project']['db']['migrate']}"
+    cwd node['deploy-project']['db']['migrate_cwd']
   end
 end
 
