@@ -5,9 +5,9 @@ define :php_oc_banner, :images => nil, :status => 1, :force => false do
       name: params[:name],
       status: params[:status],
       banner_image: params[:images]
-  }.to_json
+  }.to_json.gsub('\'', '\\\\047')
 
-  cmd = "echo '#{banner}' | php cli/index.php banner/save"
+  cmd = "echo -e '#{banner}' | php cli/index.php banner/save"
   if params[:force]
     cmd += ' --force'
   end
