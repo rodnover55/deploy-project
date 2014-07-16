@@ -56,11 +56,12 @@ end
 
 template '/usr/bin/fakemail.sh' do
   source 'fakemail.sh.erb'
+  mode 0755
 end
 
 case node["platform"]
   when "debian", "ubuntu"
-    php_fakemail_config_path = '/etc/php5/conf.d/50-fakemail.ini'
+    php_fakemail_config_path = '/etc/php5/apache2/conf.d/50-fakemail.ini'
     service = 'service[apache2]'
   when 'redhat', 'centos', 'fedora'
     php_fakemail_config_path = '/etc/php.d/fakemail.ini'
