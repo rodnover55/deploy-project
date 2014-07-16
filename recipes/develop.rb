@@ -54,6 +54,26 @@ if needMysqlConfigure
   end
 end
 
+template '/usr/bin/fakemail.sh' do
+  source 'fakemail.sh.erb'
+end
+
+case node["platform"]
+  when "debian", "ubuntu"
+    php_fakemail_config_path = '/etc/php5/conf.d/50-fakemail.ini'
+    service = 'service[apache2]'
+  when 'redhat', 'centos', 'fedora'
+    php_fakemail_config_path = '/etc/php.d/fakemail.ini'
+    service = 'service[httpd]'
+end
+
+directory File.dirname(php_fakemail_config_path)
+
+template php_fakemail_config_path do
+  source 'php-fakemail.ini.erb'
+  notifies :restart, service, :delayed
+end
+
 node.override['deploy-project']['dev'] = true
 
 include_recipe 'deploy-project::configure'
