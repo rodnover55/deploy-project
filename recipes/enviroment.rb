@@ -87,6 +87,7 @@ if node['deploy-project']['db']['force-config']
 end
 
 if needMysqlConfigure
+  directory '/etc/mysql/'
   if %w(redhat centos fedora).include?(node["platform"])
     file '/etc/mysql/my.cnf' do
       content '!includedir /etc/mysql/conf.d/'

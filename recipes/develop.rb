@@ -15,6 +15,7 @@ mount node['deploy-project']['path'] do
   device node['deploy-project']['path']
   action :mount
 end
+
 case node["platform"]
   when 'redhat', 'centos', 'fedora'
     package 'php-pecl-xdebug'
