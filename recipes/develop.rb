@@ -48,7 +48,7 @@ if needMysqlConfigure
   end
   template "/etc/mysql/conf.d/custom.cnf" do
     source 'mysql-custom-dev.cnf.erb'
-    notifies :restart, "service[#{mysqlServ}]", :delayed
+    notifies :restart, "service[#{mysqlServ}]", :immediate
   end
 
   mysql_database_user "#{node['deploy-project']['db']['user']}" do
