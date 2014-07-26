@@ -31,9 +31,9 @@ end
 
 packages = case node["platform"]
              when "debian", "ubuntu"
-               %w[mysql-server php5 mysql-client php5-json php5-mcrypt php5-curl php5-gd php5-mysql screen git]
+               %w[mysql-server php5 mysql-client php5-json php5-mcrypt php5-curl php5-gd php5-mysql screen git wget]
              when "redhat", "centos", "fedora"
-               %w[mysql-server php mysql php-mcrypt php-curl php-mbstring php-gd php-mysql screen git php-domxml php-soap]
+               %w[mysql-server php mysql php-mcrypt php-curl php-mbstring php-gd php-mysql screen git php-domxml php-soap wget]
 
            end
 
@@ -55,7 +55,7 @@ end
 case node["platform"]
   when "centos"
     service 'httpd' do
-      action [:enable, :restart, :start]
+      action [:enable, :restart]
     end
 end
 if needApacheConfigure

@@ -1,22 +1,32 @@
 include_recipe 'deploy-project::enviroment'
 
 
-web_user = Etc.getpwnam(node['apache']['user'])
+
 mount node['deploy-project']['path'] do
   fstype 'vboxsf'
-  options "uid=#{web_user.uid},gid=#{web_user.gid}"
+  options do
+    web_user = Etc.getpwnam(node['apache']['user'])
+    "uid=#{web_user.uid},gid=#{web_user.gid}"
+  end
   device node['deploy-project']['path']
   action :umount
 end
 
 mount node['deploy-project']['path'] do
   fstype 'vboxsf'
-  options "uid=#{web_user.uid},gid=#{web_user.gid}"
+  options do
+    web_user = Etc.getpwnam(node['apache']['user'])
+    "uid=#{web_user.uid},gid=#{web_user.gid}"
+  end
   device node['deploy-project']['path']
   action :mount
 end
-
-package 'php5-xdebug'
+case node["platform"]
+  when 'redhat', 'centos', 'fedora'
+    package 'php-pecl-xdebug'
+  when "debian", "ubuntu"
+    package 'php5-xdebug'
+end
 
 ip = node[:network][:interfaces][:eth1][:addresses].detect{|k,v| v[:family] == "inet" }.first
 remote_ip = ip.gsub /\.\d+$/, '.1'
@@ -25,7 +35,13 @@ needApacheConfigure = !(node['deploy-project']['disabled'] || []).include?('apac
 needMysqlConfigure = !(node['deploy-project']['disabled'] || []).include?('mysql-configure')
 
 if needApacheConfigure
-  template "#{node['php']['modules_conf_dir']}xdebug.ini" do
+  dirConfig = case node["platform"]
+    when 'redhat', 'centos', 'fedora'
+      '/etc/php.d/'
+    when "debian", "ubuntu"
+      node['php']['modules_conf_dir']
+  end
+  template "#{dirConfig}xdebug.ini" do
     source 'php-xdebug.ini.erb'
     variables({remote_host: remote_ip})
     notifies :reload, "service[apache2]", :delayed
@@ -33,13 +49,22 @@ if needApacheConfigure
 end
 
 if needMysqlConfigure
-  service 'mysql' do
+  mysqlServ = case node["platform"]
+                when 'redhat', 'centos', 'fedora'
+                  'mysqld'
+                when "debian", "ubuntu"
+                  'mysql'
+              end
+  service mysqlServ do
     action :nothing
   end
 
+  directory '/etc/mysql/conf.d' do
+    recursive true
+  end
   template "/etc/mysql/conf.d/custom.cnf" do
     source 'mysql-custom-dev.cnf.erb'
-    notifies :restart, "service[mysql]", :delayed
+    notifies :restart, "service[#{mysqlServ}]", :delayed
   end
 
   mysql_database_user "#{node['deploy-project']['db']['user']}" do
