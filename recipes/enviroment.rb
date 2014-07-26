@@ -85,6 +85,14 @@ if node['deploy-project']['db']['force-config']
   end
 end
 
+if needMysqlConfigure
+  if %w(redhat centos fedora).include?(node["platform"])
+    file '/etc/mysql/my.cnf' do
+      content '!includedir /etc/mysql/conf.d'
+    end
+  end
+end
+
 mysql_database db_name do
   connection(
       :host     => node['deploy-project']['db']['host'],
