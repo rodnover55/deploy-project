@@ -58,6 +58,7 @@ case node["platform"]
       action [:enable, :restart]
     end
 end
+
 if needApacheConfigure
   if node['lsb']['codename'] == 'saucy'
     execute 'mcrypt' do
@@ -88,7 +89,7 @@ end
 if needMysqlConfigure
   if %w(redhat centos fedora).include?(node["platform"])
     file '/etc/mysql/my.cnf' do
-      content '!includedir /etc/mysql/conf.d'
+      content '!includedir /etc/mysql/conf.d/'
     end
   end
 end

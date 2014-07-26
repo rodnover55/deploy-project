@@ -4,20 +4,14 @@ include_recipe 'deploy-project::enviroment'
 
 mount node['deploy-project']['path'] do
   fstype 'vboxsf'
-  options do
-    web_user = Etc.getpwnam(node['apache']['user'])
-    "uid=#{web_user.uid},gid=#{web_user.gid}"
-  end
+  options "rw,uid=`id -u #{node['apache']['user']}`,gid=`id -g #{node['apache']['user']}`"
   device node['deploy-project']['path']
   action :umount
 end
 
 mount node['deploy-project']['path'] do
   fstype 'vboxsf'
-  options do
-    web_user = Etc.getpwnam(node['apache']['user'])
-    "uid=#{web_user.uid},gid=#{web_user.gid}"
-  end
+  options "rw,uid=`id -u #{node['apache']['user']}`,gid=`id -g #{node['apache']['user']}`"
   device node['deploy-project']['path']
   action :mount
 end
