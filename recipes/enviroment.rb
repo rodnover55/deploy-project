@@ -46,7 +46,6 @@ service_mysql = case node["platform"]
     'mysql'
   when "redhat", "centos", "fedora"
     'mysqld'
-
 end
 service service_mysql do
   action [:enable, :start]
@@ -117,8 +116,13 @@ if needApacheConfigure
 end
 
 unless node['deploy-project']['hostname'].nil?
-  file'/etc/hosts' do
-    content node['deploy-project']['hostname']
+  case node["platform"]
+    when "debian", "ubuntu"
+      file'/etc/hostname' do
+        content node['deploy-project']['hostname']
+      end
+    when "redhat", "centos", "fedora"
+      execute "sed -ie 's/HOSTNAME=.*/HOSTNAME=#{node['deploy-project']['hostname']}/g' /etc/sysconfig/network"
   end
   execute "hostname #{node['deploy-project']['hostname']}"
 end
