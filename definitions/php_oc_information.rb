@@ -10,11 +10,11 @@ define :php_oc_information, :keyword => nil, :template => nil, :title => nil, :s
       cwd node['deploy-project']['path']
       action :run
     end
-  else
-    execute "php cli/index.php configure/information_check '#{params[:keyword]}' '#{params[:template]}' '#{params[:title]}' '#{params[:sort_order]}' '#{params[:bottom]}' '#{params[:status]}' #{params[:id]}" do
-      cwd node['deploy-project']['path']
-      returns [0]
-      action :run
-    end
+  # else
+  #   execute "php cli/index.php configure/information_check '#{params[:keyword]}' '#{params[:template]}' '#{params[:title]}' '#{params[:sort_order]}' '#{params[:bottom]}' '#{params[:status]}' #{params[:id]}" do
+  #     cwd node['deploy-project']['path']
+  #     returns [0]
+  #     action :run
+  #   end
   end
 end
