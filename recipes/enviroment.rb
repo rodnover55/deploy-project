@@ -116,4 +116,11 @@ if needApacheConfigure
   end
 end
 
+unless node['deploy-project']['hostname'].nil?
+  file'/etc/hosts' do
+    content node['deploy-project']['hostname']
+  end
+  execute "hostname #{node['deploy-project']['hostname']}"
+end
+
 include_recipe 'deploy-project::backup'
