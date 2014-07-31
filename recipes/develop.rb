@@ -86,12 +86,12 @@ template php_fakemail_config_path do
 end
 
 directory "/var/mail/sendmail/" do
-  mode 0755
+  mode 0777
 end
 
 %w(cur new tmp).each do |d|
   directory "/var/mail/sendmail/#{d}" do
-    mode 0755
+    mode 0777
   end
 end
 
