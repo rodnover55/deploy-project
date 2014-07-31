@@ -85,6 +85,16 @@ template php_fakemail_config_path do
   notifies :restart, service, :delayed
 end
 
+directory "/var/mail/sendmail/" do
+  mode 0755
+end
+
+%w(cur new tmp).each do |d|
+  directory "/var/mail/sendmail/#{d}" do
+    mode 0755
+  end
+end
+
 node.override['deploy-project']['dev'] = true
 
 include_recipe 'deploy-project::configure'
