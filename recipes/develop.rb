@@ -40,6 +40,7 @@ if needMysqlConfigure
                   'mysql'
               end
   service mysqlServ do
+    supports :status => true, :restart => true
     action :nothing
   end
 
