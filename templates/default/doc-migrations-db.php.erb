@@ -1,9 +1,0 @@
-<?php
-return array(
-   'driver'    => 'pdo_mysql',
-   'host'      => '<%= node['deploy-project']['db']['host'] %>',
-   'user'      => '<%= node['deploy-project']['db']['user'] %>',
-   'password'  => '<%= node['deploy-project']['db']['password'] %>',
-   'dbname'    => '<%= node['deploy-project']['db']['database'] || node['deploy-project']['project'] %>'
-);
-

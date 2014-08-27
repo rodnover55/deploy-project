@@ -57,22 +57,6 @@ directory node['deploy-project']['path'] do
   group node['apache']['group']
 end
 
-if node['deploy-project']['repo']['method'] == 'sync'
-  # execute 'git config core.filemode false' do
-  #   cwd node['deploy-project']['path']
-  #   only_if { Dir.exist?("#{node['deploy-project']['path']}/.git")}
-  #   user node['apache']['user']
-  #   group node['apache']['group']
-  # end
-
-  # execute 'git reset --hard' do
-  #   cwd node['deploy-project']['path']
-  #   only_if { Dir.exist?("#{node['deploy-project']['path']}/.git")}
-  #   user node['apache']['user']
-  #   group node['apache']['group']
-  # end
-end
-
 git node['deploy-project']['path'] do
   destination node['deploy-project']['path']
   enable_submodules true
@@ -84,9 +68,6 @@ git node['deploy-project']['path'] do
   ssh_wrapper "#{key_dir}wrap-ssh4git.sh"
   #depth 1
 end
-
-
-include_recipe 'deploy-project::configure'
 
 execute "chown -R #{node['apache']['user']}:#{node['apache']['group']} '#{ node['deploy-project']['path']}'" do
 end
