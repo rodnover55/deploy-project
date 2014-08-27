@@ -71,19 +71,22 @@ end
 
 case node["platform"]
   when "debian", "ubuntu"
-    php_fakemail_config_path = '/etc/php5/apache2/conf.d/50-fakemail.ini'
+    php_fakemail_config_paths = ['/etc/php5/apache2/conf.d/50-fakemail.ini',
+                                '/etc/php5/cli/conf.d/50-fakemail.ini']
     service = 'service[apache2]'
   when 'redhat', 'centos', 'fedora'
-    php_fakemail_config_path = '/etc/php.d/fakemail.ini'
+    php_fakemail_config_paths = ['/etc/php.d/fakemail.ini']
     service = 'service[httpd]'
 end
-
-directory File.dirname(php_fakemail_config_path)
-
-template php_fakemail_config_path do
-  source 'php-fakemail.ini.erb'
-  notifies :restart, service, :delayed
+php_fakemail_config_paths.each do |p|
+  directory File.dirname(p)
+  template p do
+    source 'php-fakemail.ini.erb'
+    notifies :restart, service, :delayed
+  end
 end
+
+
 
 directory "/var/mail/sendmail/" do
   mode 0777
