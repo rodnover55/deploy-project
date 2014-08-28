@@ -1,5 +1,6 @@
 include_recipe 'deploy-project::enviroment'
-
+#HACK
+include_recipe 'database::mysql'
 
 
 execute "umount #{node['deploy-project']['path']}" do

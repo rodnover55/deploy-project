@@ -5,11 +5,6 @@ if node['platform_family'] == 'debian'
   include_recipe 'apt'
 end
 
-if needApacheConfigure
-  include_recipe 'apache2'
-  include_recipe 'apache2::mod_rewrite'
-end
-
 case node["platform"]
   when "centos"
     include_recipe 'yum-epel'
@@ -23,9 +18,14 @@ packages = case node["platform"]
 
            end
 
-packages.each { |p|
+packages.each do |p|
   package p
-}
+end
+
+if needApacheConfigure
+  include_recipe 'apache2'
+  include_recipe 'apache2::mod_rewrite'
+end
 
 if needApacheConfigure
   ['/etc/php5/apache2/conf.d/20-timezone.ini',
@@ -57,8 +57,6 @@ case node["platform"]
       action [:enable, :restart]
     end
 end
-
-include_recipe 'database::mysql'
 
 if needApacheConfigure
   if %w[saucy trusty].include?(node['lsb']['codename'])

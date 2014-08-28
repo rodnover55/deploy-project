@@ -1,4 +1,6 @@
 include_recipe 'deploy-project::enviroment'
+#HACK
+include_recipe 'database::mysql'
 
 key_dir = '/tmp/deploy/'
 directory "#{key_dir}.ssh" do
