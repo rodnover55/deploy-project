@@ -8,18 +8,6 @@ end
 if needApacheConfigure
   include_recipe 'apache2'
   include_recipe 'apache2::mod_rewrite'
-
-  ['/etc/php5/apache2/conf.d/20-timezone.ini',
-   '/etc/php5/cli/conf.d/20-timezone.ini'].each do |fn|
-    directory ::File.dirname(fn) do
-      recursive true
-    end
-    file fn do
-      content "date.timezone = #{node['deploy-project']['timezone']}"
-      notifies :restart, 'service[apache2]', :delayed
-      not_if { node['deploy-project']['timezone'].nil? }
-    end
-  end
 end
 
 case node["platform"]
@@ -38,6 +26,20 @@ packages = case node["platform"]
 packages.each { |p|
   package p
 }
+
+if needApacheConfigure
+  ['/etc/php5/apache2/conf.d/20-timezone.ini',
+   '/etc/php5/cli/conf.d/20-timezone.ini'].each do |fn|
+    directory ::File.dirname(fn) do
+      recursive true
+    end
+    file fn do
+      content "date.timezone = #{node['deploy-project']['timezone']}"
+      notifies :restart, 'service[apache2]', :delayed
+      not_if { node['deploy-project']['timezone'].nil? }
+    end
+  end
+end
 
 service_mysql = case node["platform"]
   when "debian", "ubuntu"
