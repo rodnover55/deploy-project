@@ -22,8 +22,6 @@ if needApacheConfigure
   end
 end
 
-include_recipe 'database::mysql'
-
 case node["platform"]
   when "centos"
     include_recipe 'yum-epel'
@@ -31,7 +29,7 @@ end
 
 packages = case node["platform"]
              when "debian", "ubuntu"
-               %w[mysql-server php5 mysql-client php5-json php5-mcrypt php5-curl php5-gd php5-mysql screen git wget]
+               %w[mysql-server php5 mysql-client php5-json php5-mcrypt php5-curl php5-gd php5-mysql screen git wget ruby-dev]
              when "redhat", "centos", "fedora"
                %w[mysql-server php mysql php-mcrypt php-curl php-mbstring php-gd php-mysql screen git php-domxml php-soap wget]
 
@@ -57,6 +55,8 @@ case node["platform"]
       action [:enable, :restart]
     end
 end
+
+include_recipe 'database::mysql'
 
 if needApacheConfigure
   if %w[saucy trusty].include?(node['lsb']['codename'])
