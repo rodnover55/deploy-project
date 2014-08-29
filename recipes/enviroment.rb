@@ -19,7 +19,9 @@ packages = case node["platform"]
            end
 
 packages.each do |p|
-  package p
+  package p do
+    action :install
+  end.run_action(:install)
 end
 
 if needApacheConfigure
@@ -57,6 +59,7 @@ case node["platform"]
       action [:enable, :restart]
     end
 end
+
 
 if needApacheConfigure
   if %w[saucy trusty].include?(node['lsb']['codename'])
