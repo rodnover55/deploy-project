@@ -1,7 +1,7 @@
 needApacheConfigure = !(node['deploy-project']['disabled'] || []).include?('apache-configure')
 needMysqlConfigure = !(node['deploy-project']['disabled'] || []).include?('mysql-configure')
 
-if node['platform_family'] == 'debian'
+if %w[debian ubuntu].include?(node['platform_family'])
   include_recipe 'apt'
 end
 
