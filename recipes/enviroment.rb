@@ -21,7 +21,7 @@ packages = case node["platform"]
 packages.each do |p|
   package p do
     action :install
-  end.run_action(:install)
+  end
 end
 
 if needApacheConfigure
