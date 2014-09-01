@@ -225,7 +225,7 @@ end
 
 
 unless node['deploy-project']['php-oc']['banners'].nil?
-  node['deploy-project']['php-oc']['banners'].each do |banner|
+  node['deploy-project']['php-oc']['banners'].each_value do |banner|
     php_oc_banner banner['name'] do
       status banner['status'] || 1
       force banner['force'] || false
