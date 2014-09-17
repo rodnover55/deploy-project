@@ -2,8 +2,12 @@ include_recipe 'deploy-project::enviroment'
 
 
 
-execute "umount #{node['deploy-project']['path']}"
-execute "mount -t vboxsf -o rw,uid=`id -u #{node['apache']['user']}`,gid=`id -g #{node['apache']['user']}` #{node['deploy-project']['path']} #{node['deploy-project']['path']}"
+execute "umount #{node['deploy-project']['path']}" do
+  returns [0, 1]
+end
+execute "mount -t vboxsf -o rw,uid=`id -u #{node['apache']['user']}`,gid=`id -g #{node['apache']['user']}` #{node['deploy-project']['path']} #{node['deploy-project']['path']}" do
+  returns [0, 1]
+end
 
 case node["platform"]
   when 'redhat', 'centos', 'fedora'
