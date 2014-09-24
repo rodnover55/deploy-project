@@ -106,21 +106,6 @@ mysql_database db_name do
   action :create
 end
 
-mysql_database db_name do
-  connection(
-      :host     => node['deploy-project']['db']['host'],
-      :username => node['deploy-project']['db']['user'],
-      :password => node['deploy-project']['db']['password']
-  )
-  script = "#{node['deploy-project']['path']}/#{node['deploy-project']['db']['install']}"
-  not_if { (::File.exists?("#{node['deploy-project']['path']}/config.php") &&
-      ::File.exists?("#{node['deploy-project']['path']}/admin/config.php") &&
-      ::File.exists?("#{node['deploy-project']['path']}/cli/config.php")) ||
-      !::File.exists?(script) }
-  sql { ::File.open(script).read }
-  action :query
-end
-
 
 domain = node['deploy-project']['domain'] || "#{node['deploy-project']['project']}.local"
 aliases = node['deploy-project']['aliases'] || ["www.#{node['deploy-project']['project']}.local"]
