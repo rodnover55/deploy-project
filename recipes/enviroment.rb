@@ -59,7 +59,7 @@ case node["platform"]
 end
 
 if needApacheConfigure
-  if node['lsb']['codename'] == 'saucy'
+  if %w[saucy trusty].include?(node['lsb']['codename'])
     execute 'mcrypt' do
       command 'mv /etc/php5/conf.d/mcrypt.ini /etc/php5/mods-available/; php5enmod mcrypt'
       only_if { ::File.exist?('/etc/php5/conf.d/mcrypt.ini')}
