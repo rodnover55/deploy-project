@@ -9,6 +9,8 @@ default['deploy-project']['redirect'] = nil
 default['php']['modules_conf_dir'] = '/etc/php5/mods-available/'
 default['deploy-project']['repo']['erase_path'] = false
 default['deploy-project']['repo']['method'] = "sync"
+default['deploy-project']['repo']['private_key'] = '/root/.ssh/id_rsa'
+default['deploy-project']['repo']['public_key'] = '/root/.ssh/id_rsa.pub'
 
 default['deploy-project']['php']['timezone'] = nil
 default['deploy-project']['dev'] = false
