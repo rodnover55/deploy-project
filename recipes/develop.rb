@@ -43,9 +43,11 @@ if needMysqlConfigure
                 when "debian", "ubuntu"
                   'mysql'
               end
-  service mysqlServ do
-    supports :status => true, :restart => true
-    action :nothing
+
+  unless %w[trusty].include?(node['lsb']['codename'])
+    service mysqlServ do
+      supports :status => true, :restart => true
+    end
   end
 
   directory '/etc/mysql/conf.d' do
@@ -53,7 +55,7 @@ if needMysqlConfigure
   end
   template "/etc/mysql/conf.d/custom.cnf" do
     source 'mysql-custom-dev.cnf.erb'
-    notifies :restart, "service[#{mysqlServ}]", :immediate
+    notifies :restart, "service[#{mysqlServ}]", :immediately
   end
 
   mysql_database_user "#{node['deploy-project']['db']['user']}" do
