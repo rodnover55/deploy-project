@@ -1,80 +1,11 @@
+include_recipe 'deploy-project::ssh'
+
 include_recipe 'deploy-project::enviroment'
-#HACK
-include_recipe 'database::mysql'
 
-key_dir = '/tmp/deploy/'
-directory "#{key_dir}.ssh" do
-  recursive true
-  owner node['apache']['user']
-  group node['apache']['group']
-  mode 00700
+if node['deploy-project']['dev']
+  include_recipe 'deploy-project::develop'
+else
+  include_recipe 'deploy-project::production'
 end
 
-needMysqlConfigure = !(node['deploy-project']['disabled'] || []).include?('mysql-configure')
-
-if needMysqlConfigure
-  template "/etc/my.cnf" do
-    source 'mysql-custom.cnf.erb'
-    only_if { node['platform'] == 'centos' }
-    notifies :restart, (node['platform'] == 'centos') ? ("service[mysqld]") : ("service[mysql]")
-  end
-end
-
-execute "cp #{node['deploy-project']['repo']['private_key']} #{key_dir}.ssh/id_rsa" do
-  umask 00700
-end
-
-execute "cp #{node['deploy-project']['repo']['public_key']} #{key_dir}.ssh/id_rsa.pub" do
-  umask 00700
-end
-
-execute "chown -R #{node['apache']['user']}:#{node['apache']['group']} '#{key_dir}.ssh/'" do
-  command "chown -R #{node['apache']['user']}:#{node['apache']['group']} '#{key_dir}.ssh/'"
-end
-
-execute "chmod -R 700 '#{key_dir}.ssh/'" do
-  command "chmod -R 700 '#{key_dir}.ssh/'"
-end
-
-
-template "#{key_dir}wrap-ssh4git.sh" do
-  source "wrap-ssh4git.sh.erb"
-  mode 00700
-  owner node['apache']['user']
-  group node['apache']['group']
-  variables({key: "#{key_dir}.ssh/id_rsa" })
-end
-
-if node['deploy-project']['repo']['erase_path']
-  directory node['deploy-project']['path'] do
-    owner node['apache']['user']
-    group node['apache']['group']
-    action :delete
-    recursive true
-  end
-end
-
-directory node['deploy-project']['path'] do
-  owner node['apache']['user']
-  group node['apache']['group']
-end
-
-git node['deploy-project']['path'] do
-  destination node['deploy-project']['path']
-  enable_submodules true
-  user node['apache']['user']
-  group node['apache']['group']
-  repository node['deploy-project']['repo']['url']
-  revision node['deploy-project']['repo']['branch'] || 'master'
-  action node['deploy-project']['repo']['method']
-  ssh_wrapper "#{key_dir}wrap-ssh4git.sh"
-  #depth 1
-end
-
-execute "chown -R #{node['apache']['user']}:#{node['apache']['group']} '#{ node['deploy-project']['path']}'" do
-end
-
-directory "#{key_dir}" do
-  recursive true
-  action :delete
-end
+include_recipe 'deploy-project::ssh_clean'
