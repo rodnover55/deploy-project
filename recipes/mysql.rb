@@ -1,9 +1,10 @@
+include_recipe 'database::mysql'
+
 service_mysql = (node['platform'] == 'centos') ? ('service[mysqld]') : ('service[mysql]')
 
 service (node['platform'] == 'centos') ? ('mysqld') : ('mysql') do
-  action [:enable, :start]
+  action [:start]
 end
-
 
 if %w(redhat centos fedora).include?(node['platform'])
   if node['deploy-project']['dev']
@@ -40,8 +41,8 @@ if node['deploy-project']['db']['force-config']
         host: node['deploy-project']['db']['host'],
         username: node['deploy-project']['db']['user'],
         password: node['deploy-project']['db']['password'],
-        database_name: node['deploy-project']['project']
     )
+    database_name node['deploy-project']['project']
     action :drop
   end
 end
@@ -51,8 +52,8 @@ mysql_database "Create database #{node['deploy-project']['project']}" do
       host: node['deploy-project']['db']['host'],
       username: node['deploy-project']['db']['user'],
       password: node['deploy-project']['db']['password'],
-      database_name: node['deploy-project']['project']
   )
+  database_name node['deploy-project']['database']
   action :create
 end
 
