@@ -1,4 +1,4 @@
-unless node['deploy-project']['repo']['private_key'].nil? || node['deploy-project']['repo']['private_key'].nil?
+unless node['deploy-project']['ssh']['keydir'].nil?
   include_recipe 'apache2'
 
   package 'git'
