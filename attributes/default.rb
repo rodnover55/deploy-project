@@ -19,3 +19,5 @@ default['deploy-project']['php']['timezone'] = nil
 default['deploy-project']['dev'] = false
 
 default['yum']['epel']['exclude'] = 'test*'
+
+default['deploy-project']['ssh']['keydir'] = '/tmp/deploy'
