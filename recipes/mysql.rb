@@ -18,12 +18,12 @@ else
   if node['deploy-project']['dev']
     template '/etc/mysql/conf.d/dev.cnf' do
       source 'mysql-custom-dev.cnf.erb'
-      notifies :restart, 'service[mysqld]', :immediately
+      notifies :restart, 'service[mysqld]', :delayed
     end
   end
   template '/etc/mysql/conf.d/custom.cnf' do
     source 'mysql-custom.cnf.erb'
-    notifies :restart, (node['platform'] == 'centos') ? ('service[mysqld]') : ('service[mysql]'), :delayed
+    notifies :restart, 'service[mysqld]', :delayed
   end
 end
 
