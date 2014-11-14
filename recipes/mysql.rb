@@ -1,21 +1,22 @@
 service_mysql = (node['platform'] == 'centos') ? ('service[mysqld]') : ('service[mysql]')
 
-service service_mysql do
+service (node['platform'] == 'centos') ? ('mysqld') : ('mysql') do
   action [:enable, :start]
 end
+
 
 if %w(redhat centos fedora).include?(node['platform'])
   if node['deploy-project']['dev']
     template '/etc/my.cnf.d/dev.cnf' do
       source 'mysql-custom-dev.cnf.erb'
       only_if { node['platform'] == 'centos' }
-      notifies :restart, (node['platform'] == 'centos') ? ('service[mysqld]') : ('service[mysql]'), :delayed
+      notifies :restart, service_mysql, :delayed
     end
   end
   template '/etc/my.cnf.d/custom.cnf' do
     source 'mysql-custom.cnf.erb'
     only_if { node['platform'] == 'centos' }
-    notifies :restart, (node['platform'] == 'centos') ? ('service[mysqld]') : ('service[mysql]'), :delayed
+    notifies :restart, service_mysql, :delayed
   end
 else
   directory '/etc/mysql/conf.d' do
@@ -24,12 +25,12 @@ else
   if node['deploy-project']['dev']
     template '/etc/mysql/conf.d/dev.cnf' do
       source 'mysql-custom-dev.cnf.erb'
-      notifies :restart, 'service[mysqld]', :delayed
+      notifies :restart, service_mysql, :delayed
     end
   end
   template '/etc/mysql/conf.d/custom.cnf' do
     source 'mysql-custom.cnf.erb'
-    notifies :restart, 'service[mysqld]', :delayed
+    notifies :restart, service_mysql, :delayed
   end
 end
 
