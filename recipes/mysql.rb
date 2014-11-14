@@ -1,3 +1,9 @@
+service_mysql = (node['platform'] == 'centos') ? ('service[mysqld]') : ('service[mysql]')
+
+service service_mysql do
+  action [:enable, :start]
+end
+
 if %w(redhat centos fedora).include?(node['platform'])
   if node['deploy-project']['dev']
     template '/etc/my.cnf.d/dev.cnf' do
