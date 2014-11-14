@@ -35,5 +35,4 @@ end
 
 if node['deploy-project']['dev']
   include_recipe 'deploy-project::xdebug'
-  notifies :restart, 'service[apache2]', :delayed
 end
