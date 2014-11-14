@@ -36,3 +36,7 @@ end
 if node['deploy-project']['dev']
   include_recipe 'deploy-project::xdebug'
 end
+
+file '/etc/apache2/sites-enabled/000-default.conf' do
+  action :delete
+end
