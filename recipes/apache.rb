@@ -1,15 +1,23 @@
 include_recipe 'apache2'
 include_recipe 'apache2::mod_rewrite'
 
-%w[/etc/php5/apache2/conf.d/20-timezone.ini
-   /etc/php5/cli/conf.d/20-timezone.ini].each do |fn|
-  directory ::File.dirname(fn) do
-    recursive true
-  end
-  file fn do
-    content "date.timezone = #{node['deploy-project']['timezone']}"
-    not_if { node['deploy-project']['timezone'].nil? }
-    notifies :restart, 'service[apache2]', :delayed
+unless node['deploy-project']['timezone'].nil?
+  configs =
+      if node['platform'] == 'centos'
+        %w[/etc/php.d/timezone.ini]
+      else
+        %w[/etc/php5/apache2/conf.d/20-timezone.ini
+          /etc/php5/cli/conf.d/20-timezone.ini]
+      end
+  configs.each do |fn|
+    directory ::File.dirname(fn) do
+      recursive true
+    end
+    file fn do
+      content "date.timezone = #{node['deploy-project']['timezone']}"
+      not_if { node['deploy-project']['timezone'].nil? }
+      notifies :restart, 'service[apache2]', :delayed
+    end
   end
 end
 

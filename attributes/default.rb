@@ -15,7 +15,7 @@ default['deploy-project']['repo']['method'] = 'sync'
 default['deploy-project']['repo']['private_key'] = '/root/.ssh/id_rsa'
 default['deploy-project']['repo']['public_key'] = '/root/.ssh/id_rsa.pub'
 
-default['deploy-project']['php']['timezone'] = nil
+default['deploy-project']['php']['timezone'] = 'UTC'
 default['deploy-project']['dev'] = false
 
 default['yum']['epel']['exclude'] = 'test*'
