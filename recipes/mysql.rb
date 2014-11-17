@@ -43,7 +43,7 @@ if node['deploy-project']['db']['force-config']
         username: node['deploy-project']['db']['user'],
         password: node['deploy-project']['db']['password'],
     )
-    database_name node['deploy-project']['project']
+    database_name node['deploy-project']['db']['project']
     action :drop
   end
 end
@@ -54,7 +54,7 @@ mysql_database "Create database #{node['deploy-project']['project']}" do
       username: node['deploy-project']['db']['user'],
       password: node['deploy-project']['db']['password'],
   )
-  database_name node['deploy-project']['database']
+  database_name node['deploy-project']['db']['database']
   action :create
 end
 
