@@ -14,7 +14,7 @@ execute "Import database: #{node['deploy-project']['db']['database']}" do
         " -p#{node['deploy-project']['db']['password']}"
       end
 
-  not_if "mysql --host='#{node['deploy-project']['db']['host']}' -u#{node['deploy-project']['db']['user']}#{password} -e 'show tables' #{node['deploy-project']['db']['database']} | grep 'virus'"
+  only_if "[ $(mysql --host='#{node['deploy-project']['db']['host']}' -u#{node['deploy-project']['db']['user']}#{password} -e 'show tables' #{node['deploy-project']['db']['database']} | wc -c) = '0' ]"
   command "#{cat} '#{node['deploy-project']['path']}/#{node['deploy-project']['db']['install']}' | mysql --host='#{node['deploy-project']['db']['host']}' -u#{node['deploy-project']['db']['user']}#{password} #{node['deploy-project']['db']['database']}"
   cwd node['deploy-project']['path']
 end
