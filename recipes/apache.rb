@@ -25,12 +25,14 @@ if %w[saucy trusty].include?(node['lsb']['codename'])
   end
 end
 
-web_app node['deploy-project']['domain'] do
-  server_name node['deploy-project']['domain']
-  server_aliases node['deploy-project']['aliases']
-  docroot node['deploy-project']['path']
-  allow_override 'All'
-  notifies :restart, 'service[apache2]', :delayed
+unless node['deploy-project']['domain'].nil?
+  web_app node['deploy-project']['domain'] do
+    server_name node['deploy-project']['domain']
+    server_aliases node['deploy-project']['aliases']
+    docroot node['deploy-project']['path']
+    allow_override 'All'
+    notifies :restart, 'service[apache2]', :delayed
+  end
 end
 
 if node['deploy-project']['dev']

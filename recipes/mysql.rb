@@ -36,26 +36,28 @@ else
   end
 end
 
-if node['deploy-project']['db']['force-config']
-  mysql_database "Force drop #{node['deploy-project']['project']}" do
+unless node['deploy-project']['domain'].nil?
+  if node['deploy-project']['db']['force-config']
+    mysql_database "Force drop #{node['deploy-project']['project']}" do
+      connection(
+          host: node['deploy-project']['db']['host'],
+          username: node['deploy-project']['db']['user'],
+          password: node['deploy-project']['db']['password'],
+      )
+      database_name node['deploy-project']['db']['project']
+      action :drop
+    end
+  end
+
+  mysql_database "Create database #{node['deploy-project']['project']}" do
     connection(
         host: node['deploy-project']['db']['host'],
         username: node['deploy-project']['db']['user'],
         password: node['deploy-project']['db']['password'],
     )
-    database_name node['deploy-project']['db']['project']
-    action :drop
+    database_name node['deploy-project']['db']['database']
+    action :create
   end
-end
-
-mysql_database "Create database #{node['deploy-project']['project']}" do
-  connection(
-      host: node['deploy-project']['db']['host'],
-      username: node['deploy-project']['db']['user'],
-      password: node['deploy-project']['db']['password'],
-  )
-  database_name node['deploy-project']['db']['database']
-  action :create
 end
 
 if node['deploy-project']['dev']
