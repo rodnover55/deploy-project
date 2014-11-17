@@ -1,3 +1,4 @@
+include_recipe 'deploy-project::mysql'
 execute "Import database: #{node['deploy-project']['db']['database']}" do
   cat = case ::File.extname(node['deploy-project']['db']['install'])
           when '.gz'
