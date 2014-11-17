@@ -7,6 +7,7 @@ service (node['platform'] == 'centos') ? ('mysqld') : ('mysql') do
 end
 
 if %w(redhat centos fedora).include?(node['platform'])
+  directory '/etc/my.cnf.d'
   if node['deploy-project']['dev']
     template '/etc/my.cnf.d/dev.cnf' do
       source 'mysql-custom-dev.cnf.erb'
