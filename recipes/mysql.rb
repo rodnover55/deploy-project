@@ -49,7 +49,7 @@ unless node['deploy-project']['domain'].nil?
     end
   end
 
-  mysql_database "Create database #{node['deploy-project']['project']}" do
+  mysql_database "Create database #{node['deploy-project']['database']}" do
     connection(
         host: node['deploy-project']['db']['host'],
         username: node['deploy-project']['db']['user'],
