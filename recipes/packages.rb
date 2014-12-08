@@ -25,8 +25,9 @@ packages =
   end
 
 packages.each do |p|
-  package p
-  if not node['deploy-project']['old-php'] and %w[centos].include?(node['platform'])
-    options '--enablerepo=remi-php55,remi'
+  package p do
+    if not node['deploy-project']['old-php'] and %w[centos].include?(node['platform'])
+      options '--enablerepo=remi-php55,remi'
+    end
   end
 end
