@@ -9,7 +9,9 @@ end
 
 case node['platform']
   when 'centos'
-    include_recipe 'yum-epel'
+    if not node['deploy-project']['old-php']
+      include_recipe 'yum-epel'
+    end
 end
 
 packages =
