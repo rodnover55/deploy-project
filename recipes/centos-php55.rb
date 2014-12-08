@@ -14,13 +14,15 @@ remote_file "#{Chef::Config[:file_cache_path]}/remi-release-6.rpm" do
   action :create
 end
 
-rpm_package "epel-repo" do
+rpm_package 'epel-repo' do
   source "#{Chef::Config[:file_cache_path]}/epel-release-6-8.noarch.rpm"
   not_if { ::File::exist?('/etc/yum.repos.d/epel.repo') }
   action :install
 end
 
-rpm_package "remi-repo" do
+package 'epel-release'
+
+rpm_package 'remi-repo' do
   source "#{Chef::Config[:file_cache_path]}/remi-release-6.rpm"
   not_if { ::File::exist?('/etc/yum.repos.d/remi.repo') }
   action :install
