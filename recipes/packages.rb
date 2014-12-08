@@ -1,4 +1,4 @@
-if node['deploy-project']['old-php'] and %w[centos].include?(node['platform'])
+if not node['deploy-project']['old-php'] and %w[centos].include?(node['platform'])
   include_recipe 'deploy-project::centos-php55'
 end
 
@@ -26,7 +26,7 @@ packages =
 
 packages.each do |p|
   package p
-  if node['deploy-project']['old-php'] and %w[centos].include?(node['platform'])
+  if not node['deploy-project']['old-php'] and %w[centos].include?(node['platform'])
     options '--enablerepo=remi-php55,remi'
   end
 end
