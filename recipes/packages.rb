@@ -1,3 +1,8 @@
+if node['deploy-project']['old-php'] and %w[centos].include?(node['platform'])
+  include_recipe 'deploy-project::centos-php55'
+end
+
+
 if %w[debian ubuntu].include?(node['platform_family'])
   include_recipe 'apt'
 end
@@ -19,4 +24,7 @@ packages =
 
 packages.each do |p|
   package p
+  if node['deploy-project']['old-php'] and %w[centos].include?(node['platform'])
+    options '--enablerepo=remi-php55,remi'
+  end
 end
