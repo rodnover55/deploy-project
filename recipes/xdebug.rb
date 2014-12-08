@@ -1,6 +1,10 @@
 case node['platform']
   when 'redhat', 'centos', 'fedora'
-    package 'php-pecl-xdebug'
+    package 'php-pecl-xdebug' do
+      if not node['deploy-project']['old-php']
+        options '--enablerepo=remi-php55,remi'
+      end
+    end
   when 'debian', 'ubuntu'
     package 'php5-xdebug'
 end
