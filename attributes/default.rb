@@ -5,6 +5,7 @@ default['deploy-project']['db']['install_type'] = 'normal'
 default['deploy-project']['db']['provider'] = 'pdo'
 default['deploy-project']['db']['database'] = node['deploy-project']['project']
 default['deploy-project']['old-php'] = false
+default['deploy-project']['root'] = ''
 
 default['deploy-project']['base'] = '/'
 default['deploy-project']['redirect'] = nil

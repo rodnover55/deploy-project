@@ -37,7 +37,7 @@ unless node['deploy-project']['domain'].nil?
   web_app node['deploy-project']['domain'] do
     server_name node['deploy-project']['domain']
     server_aliases node['deploy-project']['aliases']
-    docroot node['deploy-project']['path']
+    docroot File.join(node['deploy-project']['path'], node['deploy-project']['root'])
     allow_override 'All'
     notifies :restart, 'service[apache2]', :delayed
   end
