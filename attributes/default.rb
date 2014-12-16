@@ -16,6 +16,7 @@ default['deploy-project']['repo']['erase_path'] = false
 default['deploy-project']['repo']['method'] = 'sync'
 default['deploy-project']['repo']['private_key'] = '/root/.ssh/id_rsa'
 default['deploy-project']['repo']['public_key'] = '/root/.ssh/id_rsa.pub'
+default['deploy-project']['repo']['path'] = node['deploy-project']['path']
 
 default['deploy-project']['php']['timezone'] = 'UTC'
 default['deploy-project']['dev'] = false
