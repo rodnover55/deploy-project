@@ -1,10 +1,5 @@
 sharedAlias = 'project_root'
 
-directory node['deploy-project']['path'] do
-  owner node['apache']['user']
-  group node['apache']['group']
-end
-
 execute "umount #{node['deploy-project']['path']}" do
   not_if "ls -ld '#{node['deploy-project']['path']}' | awk '{ print $3; }' | grep '#{node['apache']['user']}' && ls -ld '#{node['deploy-project']['path']}' | awk '{ print $4; }' | grep '#{node['apache']['user']}'"
 end
