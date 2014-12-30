@@ -55,7 +55,7 @@ unless node['deploy-project']['domain'].nil?
         username: node['deploy-project']['db']['user'],
         password: node['deploy-project']['db']['password'],
     )
-    encoding 'utf8'
+    encoding node['deploy-project']['db']['charset']
     database_name node['deploy-project']['db']['database']
     action :create
   end
