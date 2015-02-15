@@ -1,4 +1,6 @@
-include_recipe 'database::mysql'
+mysql2_chef_gem 'default' do
+  action :install
+end
 
 service_mysql = (node['platform'] == 'centos') ? ('service[mysqld]') : ('service[mysql]')
 
