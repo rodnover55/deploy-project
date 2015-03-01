@@ -22,7 +22,9 @@ if needApacheConfigure
   end
 end
 
-include_recipe 'database::mysql'
+mysql2_chef_gem 'default' 
+
+#include_recipe 'database::mysql'
 
 case node["platform"]
   when "centos"
