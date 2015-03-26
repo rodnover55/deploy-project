@@ -10,6 +10,7 @@ default['deploy-project']['db']['database'] = node['deploy-project']['project']
 default['deploy-project']['db']['charset'] = 'utf8'
 default['deploy-project']['old-php'] = false
 default['deploy-project']['root'] = ''
+default['deploy-project']['frontend']['root'] = ''
 
 default['deploy-project']['base'] = '/'
 default['deploy-project']['redirect'] = nil
