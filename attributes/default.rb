@@ -1,3 +1,5 @@
+default['deploy-project']['path'] = "/var/www/#{node['deploy-project']['project']}"
+
 default['deploy-project']['db']['host'] = '127.0.0.1'
 default['deploy-project']['db']['port'] = 3306
 default['deploy-project']['db']['user'] = 'root'
