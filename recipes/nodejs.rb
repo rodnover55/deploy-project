@@ -7,7 +7,7 @@ end
 frontendPath = File.join(node['deploy-project']['repo']['path'], 
 	node['deploy-project']['frontend']['root'])
 
-execute 'Install vdna npm packages' do
+execute 'Install npm packages' do
   command 'npm install'
   cwd frontendPath
   user node['apache']['user']
