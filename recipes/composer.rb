@@ -3,7 +3,7 @@ composer '/usr/bin' do
   action [:install]
 end
 
-composer_project 'lah' do
+composer_project 'Install composer packages' do
   run_as node['apache']['user']
   install_path '/usr/bin'
   action [:install]
