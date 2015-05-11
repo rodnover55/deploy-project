@@ -1,6 +1,11 @@
-include_recipe 'deploy-project::mysql'
+include_recipe 'deploy-project::enviroment'
 
 execute "Import database: #{node['deploy-project']['db']['database']}" do
+  fileName = "#{node['deploy-project']['path']}/#{node['deploy-project']['db']['install']}"
+  unless File.exist?(fileName)
+    throw "File '#{fileName}' doesn't exist."
+  end
+
   cat = case ::File.extname(node['deploy-project']['db']['install'])
 		when '.gz'
 			'zcat'
@@ -14,6 +19,7 @@ execute "Import database: #{node['deploy-project']['db']['database']}" do
 		else
 			" -p#{node['deploy-project']['db']['password']}"
 		end
+
 
 		only_if "[ $(mysql --host='#{node['deploy-project']['db']['host']}' -u#{node['deploy-project']['db']['user']}#{password} -e 'show tables' #{node['deploy-project']['db']['database']} | wc -c) = '0' ]"
 		command "#{cat} '#{node['deploy-project']['path']}/#{node['deploy-project']['db']['install']}' | mysql --host='#{node['deploy-project']['db']['host']}' -u#{node['deploy-project']['db']['user']}#{password} #{node['deploy-project']['db']['database']}"
