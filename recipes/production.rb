@@ -11,7 +11,10 @@ git "Cloning repo #{node['deploy-project']['repo']['path']}" do
   repository node['deploy-project']['repo']['url']
   revision node['deploy-project']['repo']['branch']
   action node['deploy-project']['repo']['method']
-  ssh_wrapper "#{node['deploy-project']['ssh']['keydir']}wrap-ssh4git.sh"
+  
+  unless node['deploy-project']['ssh']['keydir'].nil?
+    ssh_wrapper "#{node['deploy-project']['ssh']['keydir']}wrap-ssh4git.sh"
+  end
   #depth 1
 end
 
