@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-/usr/bin/env ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -i "<%= @key %>" $1 $2
+/usr/bin/env ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" <%= (@key.nil?) ? () : ("-i \"#{@key}\"") %> $1 $2
