@@ -246,10 +246,8 @@ unless node['deploy-project']['php-oc']['enabled_currencies'].nil?
   end
 end
 
-
-if node['deploy-project']['dev']
-  execute "php cli/index.php configure/password 'admin' '123123'" do
-    command "php cli/index.php configure/password 'admin' '123123'"
+unless node['deploy-project']['php-oc']['admin'].nil?
+  execute "php cli/index.php configure/password 'admin' '#{node['deploy-project']['php-oc']['admin']}'" do
     cwd node['deploy-project']['path']
     action :run
   end
