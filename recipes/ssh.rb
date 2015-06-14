@@ -1,6 +1,4 @@
-unless node['deploy-project']['ssh']['keydir'].nil?
-  include_recipe 'apache2'
-
+unless node['deploy-project']['dev'] || node['deploy-project']['ssh']['keydir'].nil?
   package 'git'
 
   directory "Creating #{node['deploy-project']['ssh']['keydir']}.ssh" do
