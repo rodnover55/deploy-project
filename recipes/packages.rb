@@ -1,3 +1,7 @@
+if node['deploy-project']['disabled'].include?('packages')
+    return
+end
+
 if not node['deploy-project']['old-php'] and %w[centos].include?(node['platform'])
   include_recipe 'deploy-project::centos-php55'
 end
