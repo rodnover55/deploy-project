@@ -1,7 +1,6 @@
 unless node['deploy-project']['backup'].nil?
-  binary = node['deploy-project']['backup']['bin'] || '/root/bin'
+  binary = node['deploy-project']['backup']['bin'] || '/root/bin/backup.sh'
   backup_path = node['deploy-project']['backup']['path'] || '/root/backup'
-  backup = "#{binary}/backup.sh"
   log = (node['deploy-project']['backup']['log'].nil?) ? ('> /dev/null 2>&1') :
       (">> '#{node['deploy-project']['backup']['log']}'")
 
@@ -9,11 +8,11 @@ unless node['deploy-project']['backup'].nil?
     recursive true
   end
 
-  directory binary do
+  directory File.dirname(binary) do
     recursive true
   end
 
-  template backup do
+  template binary do
     source 'backup.sh.erb'
     mode 700
     variables({
@@ -28,6 +27,6 @@ unless node['deploy-project']['backup'].nil?
   cron "#{node['deploy-project']['project']} backup" do
     minute node['deploy-project']['backup']['minute'] || Random.rand(59)
     hour node['deploy-project']['backup']['hour'] || Random.rand(23)
-    command "#{backup} #{log}"
+    command "#{binary} #{log}"
   end
 end
